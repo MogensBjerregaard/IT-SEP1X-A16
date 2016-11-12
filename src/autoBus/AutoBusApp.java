@@ -12,6 +12,7 @@ public class AutoBusApp {
 	 */
 	public static void main(String[] args) throws Exception{
 		//test chauffeurArchive:
+		//new comment
 		ChauffeursArchive chauffeursArchive = new ChauffeursArchive();
 		/*
 		chauffeursArchive.addChauffeur(new Chauffeur("Mogens", "Bjerregaard"));
