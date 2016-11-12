@@ -1,10 +1,8 @@
-/**
- * 
- */
+
 package autoBus;
 
 /**
- * @author mob
+ * @author IT-1X-A16 Group 1: Mogens Bjerregaard, Adam Kounis, Eugene Maloman, Nicolai Onov
  *
  */
 public class AutoBusApp {
