@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/VIA Bus project - Nicolai branch.iml" filepath="$PROJECT_DIR$/VIA Bus project - Nicolai branch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/VIA Bus Project.iml" filepath="$PROJECT_DIR$/src/VIA Bus Project.iml" />
     </modules>
   </component>
 </project>
