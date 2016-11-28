@@ -73,6 +73,26 @@ public class Autobus extends JFrame {
 	private JRadioButton rdbtnPartyBus;
 	private JRadioButton rdbtnLuxuryBus;
 	private JLabel labelDeleteBusBtn;
+	private JPanel panelAddTour;
+	private JTextField textFieldDestination;
+	private JTextField textFieldAddPickup;
+	private JList list;
+	private JLabel lblStartDate;
+	private JTextField textFieldStartMonth;
+	private JTextField textFieldStartDay;
+	private JTextField textFieldStartYear;
+	private JLabel lblEndDate;
+	private JTextField textFieldEndMonth;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JLabel lblClearPickUpBtn;
+	private JList listSelectBus;
+	private JList listSelectChauffeur;
+	private JLabel lblAddTourBtn;
+	private JLabel lblDeleteTourBtn;
+	private JCheckBox chckbxBreakfast;
+	private JCheckBox chckbxAllInclusive;
+	private JCheckBox chckbxLunch;
 
 	/**
 	 * Launch the application.
@@ -427,6 +447,25 @@ public class Autobus extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "You need first to select the row you wish to delete!");
 				}
+			}
+		});
+		
+		chckbxBreakfast.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				chckbxAllInclusive.setSelected(false);		
+			}
+		});
+		
+		chckbxLunch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chckbxAllInclusive.setSelected(false);
+			}
+		});
+		
+		chckbxAllInclusive.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chckbxBreakfast.setSelected(false);
+				chckbxLunch.setSelected(false);
 			}
 		});
 		
@@ -1221,21 +1260,287 @@ public class Autobus extends JFrame {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelTopTours.setLayout(gl_panelTopTours);
+		
+		panelAddTour = new JPanel();
+		panelAddTour.setForeground(new Color(255, 255, 255));
+		panelAddTour.setBackground(new Color(95, 158, 160));
+		panelAddTour.setBorder(new CompoundBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Add Tour", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)), new EmptyBorder(3, 3, 3, 3)));
+		
+		JScrollPane scrollPaneToursArchive = new JScrollPane();
+		
+		lblDeleteTourBtn = new JLabel("Delete Tour");
+		lblDeleteTourBtn.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255), 1, true), new EmptyBorder(3, 3, 3, 3)));
+		lblDeleteTourBtn.setForeground(new Color(255, 255, 255));
+		lblDeleteTourBtn.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		GroupLayout gl_panelTours = new GroupLayout(panelTours);
 		gl_panelTours.setHorizontalGroup(
 			gl_panelTours.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 1000, Short.MAX_VALUE)
 				.addGroup(gl_panelTours.createSequentialGroup()
 					.addComponent(panelTopTours, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
 					.addGap(0))
+				.addGroup(gl_panelTours.createSequentialGroup()
+					.addGap(12)
+					.addComponent(panelAddTour, GroupLayout.PREFERRED_SIZE, 469, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(gl_panelTours.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelTours.createSequentialGroup()
+							.addComponent(scrollPaneToursArchive, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+							.addGap(20))
+						.addGroup(gl_panelTours.createSequentialGroup()
+							.addComponent(lblDeleteTourBtn)
+							.addContainerGap())))
 		);
 		gl_panelTours.setVerticalGroup(
 			gl_panelTours.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 494, Short.MAX_VALUE)
 				.addGroup(gl_panelTours.createSequentialGroup()
 					.addComponent(panelTopTours, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(436, Short.MAX_VALUE))
+					.addGap(18)
+					.addGroup(gl_panelTours.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(panelAddTour, GroupLayout.PREFERRED_SIZE, 406, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelTours.createSequentialGroup()
+							.addComponent(scrollPaneToursArchive, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblDeleteTourBtn)))
+					.addContainerGap())
 		);
+		
+		JList listToursArchive = new JList();
+		listToursArchive.setBackground(new Color(95, 158, 160));
+		listToursArchive.setBorder(new CompoundBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Tours archive", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)), new EmptyBorder(3, 3, 3, 3)));
+		scrollPaneToursArchive.setViewportView(listToursArchive);
+		
+		JLabel lblDestination = new JLabel("Destination:");
+		lblDestination.setForeground(new Color(255, 255, 255));
+		lblDestination.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		textFieldDestination = new JTextField();
+		textFieldDestination.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		textFieldDestination.setSelectionColor(new Color(102, 205, 170));
+		textFieldDestination.setSelectedTextColor(new Color(255, 255, 255));
+		textFieldDestination.setBorder(new LineBorder(new Color(255, 255, 255)));
+		textFieldDestination.setBackground(new Color(95, 158, 160));
+		textFieldDestination.setForeground(new Color(255, 255, 255));
+		textFieldDestination.setColumns(10);
+		
+		JLabel lblAddPickUpBtn = new JLabel("Add");
+		lblAddPickUpBtn.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255), 1, true), new EmptyBorder(3, 3, 3, 3)));
+		lblAddPickUpBtn.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		lblAddPickUpBtn.setForeground(new Color(255, 255, 255));
+		lblAddPickUpBtn.setBackground(new Color(95, 158, 160));
+		
+		textFieldAddPickup = new JTextField();
+		textFieldAddPickup.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		textFieldAddPickup.setSelectionColor(new Color(102, 205, 170));
+		textFieldAddPickup.setSelectedTextColor(new Color(255, 255, 255));
+		textFieldAddPickup.setBorder(new LineBorder(new Color(255, 255, 255)));
+		textFieldAddPickup.setForeground(new Color(255, 255, 255));
+		textFieldAddPickup.setBackground(new Color(95, 158, 160));
+		textFieldAddPickup.setColumns(10);
+		
+		list = new JList();
+		list.setForeground(new Color(255, 255, 255));
+		list.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		list.setBackground(new Color(95, 158, 160));
+		list.setBorder(new CompoundBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "Pick up stops", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(255, 255, 255)), new EmptyBorder(3, 3, 3, 3)));
+		
+		lblStartDate = new JLabel("Start date:");
+		lblStartDate.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		lblStartDate.setForeground(new Color(255, 255, 255));
+		
+		textFieldStartMonth = new JTextField();
+		textFieldStartMonth.setSelectionColor(new Color(102, 205, 170));
+		textFieldStartMonth.setSelectedTextColor(new Color(255, 255, 255));
+		textFieldStartMonth.setBackground(new Color(95, 158, 160));
+		textFieldStartMonth.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "MM", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldStartMonth.setForeground(new Color(255, 255, 255));
+		textFieldStartMonth.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		textFieldStartMonth.setColumns(10);
+		
+		textFieldStartDay = new JTextField();
+		textFieldStartDay.setBackground(new Color(95, 158, 160));
+		textFieldStartDay.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "DD", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldStartDay.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		textFieldStartDay.setForeground(new Color(255, 255, 255));
+		textFieldStartDay.setColumns(10);
+		
+		textFieldStartYear = new JTextField();
+		textFieldStartYear.setForeground(new Color(255, 255, 255));
+		textFieldStartYear.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		textFieldStartYear.setBackground(new Color(95, 158, 160));
+		textFieldStartYear.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "YYYY", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldStartYear.setColumns(10);
+		
+		lblEndDate = new JLabel("End date:");
+		lblEndDate.setForeground(new Color(255, 255, 255));
+		lblEndDate.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		textFieldEndMonth = new JTextField();
+		textFieldEndMonth.setForeground(new Color(255, 255, 255));
+		textFieldEndMonth.setBackground(new Color(95, 158, 160));
+		textFieldEndMonth.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "MM", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldEndMonth.setColumns(10);
+		
+		textField = new JTextField();
+		textField.setBackground(new Color(95, 158, 160));
+		textField.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "DD", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "YYYY", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textField_1.setBackground(new Color(95, 158, 160));
+		textField_1.setForeground(new Color(255, 255, 255));
+		textField_1.setColumns(10);
+		
+		lblClearPickUpBtn = new JLabel("Clear");
+		lblClearPickUpBtn.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255), 1, true), new EmptyBorder(3, 3, 3, 3)));
+		lblClearPickUpBtn.setForeground(new Color(255, 255, 255));
+		lblClearPickUpBtn.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		listSelectBus = new JList();
+		listSelectBus.setBorder(new CompoundBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "Select bus", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)), new EmptyBorder(3, 3, 3, 3)));
+		listSelectBus.setSelectionForeground(new Color(51, 51, 51));
+		listSelectBus.setSelectionBackground(new Color(102, 205, 170));
+		listSelectBus.setForeground(new Color(255, 255, 255));
+		listSelectBus.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		listSelectBus.setBackground(new Color(95, 158, 160));
+		
+		listSelectChauffeur = new JList();
+		listSelectChauffeur.setSelectionBackground(new Color(102, 205, 170));
+		listSelectChauffeur.setForeground(new Color(255, 255, 255));
+		listSelectChauffeur.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		listSelectChauffeur.setBorder(new CompoundBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "Select chauffeur", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)), null));
+		listSelectChauffeur.setBackground(new Color(95, 158, 160));
+		
+		chckbxBreakfast = new JCheckBox("Breakfast");
+		chckbxBreakfast.setForeground(new Color(255, 255, 255));
+		chckbxBreakfast.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		chckbxBreakfast.setBackground(new Color(95, 158, 160));
+		
+		chckbxLunch = new JCheckBox("Lunch");
+		chckbxLunch.setBackground(new Color(95, 158, 160));
+		chckbxLunch.setForeground(new Color(255, 255, 255));
+		chckbxLunch.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		chckbxAllInclusive = new JCheckBox("All inclusive");
+		chckbxAllInclusive.setForeground(new Color(255, 255, 255));
+		chckbxAllInclusive.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		chckbxAllInclusive.setBackground(new Color(95, 158, 160));
+		
+		JCheckBox chckbxEntranceTickets = new JCheckBox("Entrance tickets");
+		chckbxEntranceTickets.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		chckbxEntranceTickets.setBackground(new Color(95, 158, 160));
+		chckbxEntranceTickets.setForeground(new Color(255, 255, 255));
+		
+		lblAddTourBtn = new JLabel("Add Tour");
+		lblAddTourBtn.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255), 1, true), new EmptyBorder(3, 3, 3, 3)));
+		lblAddTourBtn.setForeground(new Color(255, 255, 255));
+		lblAddTourBtn.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		GroupLayout gl_panelAddTour = new GroupLayout(panelAddTour);
+		gl_panelAddTour.setHorizontalGroup(
+			gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelAddTour.createSequentialGroup()
+					.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelAddTour.createSequentialGroup()
+							.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelAddTour.createSequentialGroup()
+									.addContainerGap()
+									.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING, false)
+										.addGroup(gl_panelAddTour.createSequentialGroup()
+											.addComponent(lblDestination)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(textFieldDestination))
+										.addGroup(gl_panelAddTour.createSequentialGroup()
+											.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblStartDate)
+												.addComponent(lblEndDate))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING, false)
+												.addComponent(textFieldEndMonth, 0, 0, Short.MAX_VALUE)
+												.addComponent(textFieldStartMonth, GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING, false)
+												.addComponent(textField, 0, 0, Short.MAX_VALUE)
+												.addComponent(textFieldStartDay, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING, false)
+												.addComponent(textFieldStartYear, 0, 0, Short.MAX_VALUE)
+												.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)))))
+								.addGroup(gl_panelAddTour.createSequentialGroup()
+									.addGap(13)
+									.addComponent(listSelectBus, GroupLayout.PREFERRED_SIZE, 272, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelAddTour.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(list, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+										.addGroup(gl_panelAddTour.createSequentialGroup()
+											.addComponent(lblAddPickUpBtn)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(lblClearPickUpBtn))
+										.addComponent(textFieldAddPickup)))
+								.addGroup(gl_panelAddTour.createSequentialGroup()
+									.addGap(40)
+									.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+										.addComponent(chckbxLunch)
+										.addComponent(chckbxBreakfast)
+										.addComponent(chckbxAllInclusive)
+										.addComponent(chckbxEntranceTickets)))))
+						.addGroup(gl_panelAddTour.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(listSelectChauffeur, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(2, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panelAddTour.createSequentialGroup()
+					.addContainerGap(380, Short.MAX_VALUE)
+					.addComponent(lblAddTourBtn)
+					.addContainerGap())
+		);
+		gl_panelAddTour.setVerticalGroup(
+			gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelAddTour.createSequentialGroup()
+					.addGroup(gl_panelAddTour.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelAddTour.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panelAddTour.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblDestination)
+								.addComponent(textFieldDestination, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_panelAddTour.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblStartDate)
+								.addComponent(textFieldStartMonth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldStartDay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldStartYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panelAddTour.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblEndDate)
+								.addGroup(gl_panelAddTour.createParallelGroup(Alignment.BASELINE)
+									.addComponent(textFieldEndMonth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(22)
+							.addComponent(listSelectBus, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(listSelectChauffeur, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelAddTour.createSequentialGroup()
+							.addComponent(list, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(textFieldAddPickup, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addGroup(gl_panelAddTour.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblAddPickUpBtn)
+								.addComponent(lblClearPickUpBtn))
+							.addGap(31)
+							.addComponent(chckbxBreakfast)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(chckbxLunch)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(chckbxAllInclusive)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(chckbxEntranceTickets)))
+					.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+					.addComponent(lblAddTourBtn)
+					.addContainerGap())
+		);
+		panelAddTour.setLayout(gl_panelAddTour);
 		panelTours.setLayout(gl_panelTours);
 		
 		panelCustomers = new JPanel();
