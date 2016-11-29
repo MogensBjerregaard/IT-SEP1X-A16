@@ -3,7 +3,7 @@ package autoBus;
 import java.io.Serializable;
 
 public class DateInterval implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	private Date startDate;
 	private Date endDate;

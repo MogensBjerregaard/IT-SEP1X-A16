@@ -12,7 +12,7 @@ public class Tour implements Serializable{
 	private	Services services;
 	private	Chauffeur chauffeur;
 	private	Bus bus;
-	private	DateInterval dateInterval;
+	private transient 	DateInterval dateInterval;
 
 	public Tour(String destination, ArrayList<String> pickUpPlaces, double pricePerPassenger, Services services, Chauffeur chauffeur, Bus bus, DateInterval dateInterval) {
 		this.destination = destination;

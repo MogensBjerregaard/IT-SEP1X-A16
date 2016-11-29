@@ -14,9 +14,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Autobus extends JFrame {
@@ -153,14 +156,18 @@ public class Autobus extends JFrame {
 			listBuses();
 		}
 
-	/*	toursArchive = new ToursArchive();
+		toursArchive = new ToursArchive();
 		if (toursArchive.isFileFound()){
 			toursArchive.load();
+			/*TESTING FEATURE*/ toursArchive.add(new Tour("Chisinau",new ArrayList<String>(),0,new Services(),new Chauffeur(),new Bus(), new DateInterval()));
+								toursArchive.add(new Tour("Chisinau",new ArrayList<String>(),0,new Services(),new Chauffeur(),new Bus(), new DateInterval()));
+								toursArchive.add(new Tour("Tokio",new ArrayList<String>(),0,new Services(),new Chauffeur(),new Bus(), new DateInterval()));
+								toursArchive.add(new Tour("Benderi",new ArrayList<String>(),0,new Services(),new Chauffeur(),new Bus(), new DateInterval()));
 			listTours();
 		} else {
 			toursArchive.createFile();
 			listTours();
-		}*/
+		}
 		
 		
 	}
@@ -170,6 +177,114 @@ public class Autobus extends JFrame {
 	// This method contains all code for creating events
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void createEvents() {
+
+		searchTourTextField.getDocument().addDocumentListener(new DocumentListener() {
+																public  void deleteAllRows(final DefaultTableModel model) {
+																	for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
+																		model.removeRow(i);
+																	}
+																}
+																  public void changedUpdate(DocumentEvent e) {
+																  		deleteAllRows(toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel());
+																	  	String searchText;
+																  		if(!(searchText = searchTourTextField.getText()).equals("")){
+																	  		Object[] rowData = new Object[5];
+																			for (int i=0; i < toursArchive.getListOfTours().size(); i++){
+																				String destination = toursArchive.getListOfTours().get(i).getDestination();
+																				String substringOfDestination = destination.substring(0, searchText.length() <= destination.length() ? searchText.length() : destination.length());
+																				if(substringOfDestination.equals(searchText)){
+																				 rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
+																				 rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
+																				 rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
+																				 rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
+																				 rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
+																				 toursTableModelForNewReservation.addRow(rowData);
+																			 	}
+																	  		}
+																  		}
+																		else{
+																			deleteAllRows(toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel());
+																			toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel();
+																			Object[] rowData = new Object[5];
+																			for (int i=0; i < toursArchive.getListOfTours().size(); i++){
+																				rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
+																				rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
+																				rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
+																				rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
+																				rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
+																				toursTableModelForNewReservation.addRow(rowData);
+																			}
+																		}
+																  }
+
+																  public void removeUpdate(DocumentEvent e) {
+																	  deleteAllRows(toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel());
+																	  String searchText;
+																	  if(!(searchText = searchTourTextField.getText()).equals("")){
+																		  toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel();
+																		  Object[] rowData = new Object[5];
+																		  for (int i=0; i < toursArchive.getListOfTours().size(); i++){
+																			  String destination = toursArchive.getListOfTours().get(i).getDestination();
+																			  String substringOfDestination = destination.substring(0, searchText.length() <= destination.length() ? searchText.length() : destination.length());
+																			  if(substringOfDestination.equals(searchText)){
+																				  rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
+																				  rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
+																				  rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
+																				  rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
+																				  rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
+																				  toursTableModelForNewReservation.addRow(rowData);
+																			  }
+																		  }
+																	  }
+																	  else{
+																		  deleteAllRows(toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel());
+																		  toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel();
+																		  Object[] rowData = new Object[5];
+																		  for (int i=0; i < toursArchive.getListOfTours().size(); i++){
+																			  rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
+																			  rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
+																			  rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
+																			  rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
+																			  rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
+																			  toursTableModelForNewReservation.addRow(rowData);
+																		  }
+																	  }
+																  }
+
+																  public void insertUpdate(DocumentEvent e) {
+																	  deleteAllRows(toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel());
+																	  String searchText;
+																	  if(!(searchText = searchTourTextField.getText()).equals("")){
+																		  toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel();
+																		  Object[] rowData = new Object[5];
+																		  for (int i=0; i < toursArchive.getListOfTours().size(); i++){
+																			  String destination = toursArchive.getListOfTours().get(i).getDestination();
+																			  String substringOfDestination = destination.substring(0, searchText.length() <= destination.length() ? searchText.length() : destination.length());
+																			  if(substringOfDestination.equals(searchText)){
+																				  rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
+																				  rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
+																				  rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
+																				  rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
+																				  rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
+																				  toursTableModelForNewReservation.addRow(rowData);
+																			  }
+																		  }
+																	  }
+																	  else{
+																		  deleteAllRows(toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel());
+																		  toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel();
+																		  Object[] rowData = new Object[5];
+																		  for (int i=0; i < toursArchive.getListOfTours().size(); i++){
+																			  rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
+																			  rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
+																			  rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
+																			  rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
+																			  rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
+																			  toursTableModelForNewReservation.addRow(rowData);
+																		  }
+																	  }
+																  }
+															  });
 		
 		mntmAboutAutobus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -190,7 +305,15 @@ public class Autobus extends JFrame {
 				panelTourReservations.setVisible(true);
 			}
 		});
-		
+
+		mntmNewTourReservation.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				hideAllPanels();
+				panelNewTourReservation.setVisible(true);
+			}
+		});
+
 		mntmBusReservations.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hideAllPanels();
@@ -573,7 +696,7 @@ public class Autobus extends JFrame {
 		Object[] rowData = new Object[5];
 		for (int i=0; i < toursArchive.getListOfTours().size(); i++){
 		rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
-		rowData[1] = toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();
+		rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
 		rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
 		rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
 		rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
@@ -1757,19 +1880,10 @@ public class Autobus extends JFrame {
 		);
 		
 		tableToursForNewReservation = new JTable();
+		tableToursForNewReservation.setShowVerticalLines(false);
 		selectTourScrollPanel.setViewportView(tableToursForNewReservation);
 		tableToursForNewReservation.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Destination", "Departure date", "Number of available seats", "Bus", "Chauffeur"
@@ -1822,18 +1936,9 @@ public class Autobus extends JFrame {
 		);
 		
 		tableCustomersForNewReservation = new JTable();
+		tableCustomersForNewReservation.setShowVerticalLines(false);
 		tableCustomersForNewReservation.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Full name", "Phone number", "Address", "Date of birth", "Email"
@@ -1886,18 +1991,9 @@ public class Autobus extends JFrame {
 		);
 		
 		tablePassengersForNewReservation = new JTable();
+		tablePassengersForNewReservation.setShowVerticalLines(false);
 		tablePassengersForNewReservation.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Full name", "Phone number", "Address", "Date of birth", "Email"
