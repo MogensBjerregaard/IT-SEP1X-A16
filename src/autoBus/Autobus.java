@@ -109,6 +109,7 @@ public class Autobus extends JFrame {
 	private JTable tableToursForNewReservation;
 	private DefaultTableModel toursTableModelForNewReservation;
 	private JTextField searchTourTextField;
+
 	private JLabel lblSelectedTour;
 	private JLabel lblSelectedCustomer;
 	private JLabel lblSelectedPassengers;
@@ -118,6 +119,44 @@ public class Autobus extends JFrame {
 	private JLabel lblSelectPassengersButton;
 	private JLabel lblSearchPassengersByName;
 	private JLabel lblSelectTourButton;
+
+	private JTable tourReservationTable;
+	private JTextField tourReservationTextFieldSearch;
+	private JTable busReservationTable;
+	private JTextField busReservationTextFieldSearch;
+	private JTextField busReservationCustomerNameTextField;
+	private JTextField busReservationDistanceTextField;
+	private JTextField busReservationDurationTextField;
+	private JTextField busReservationPickUpStopsTextField;
+	private JTextField busReservationDropOffStopsTextField;
+	private JLabel lblArrivalBack;
+	private JTextField busReservationDepartureTimeTextField;
+	private JTextField busReservationArrivalTimeTextField;
+	private JTextField busReservationArrivalBackTextField;
+	private JLabel lblNumberOfPassengers;
+	private JLabel lblDateOfCreation;
+	private JTextField busReservationNumberOfPassengersTextField;
+	private JTextField busReservationDateOfCreationTextField;
+	private JPanel panel;
+	private JLabel lblChauffeur;
+	private JTextField tourReservationNumberOfAvailableSeatsTextField;
+	private JTextField tourReservationBusTextField;
+	private JTextField tourReservationChauffeurTextField;
+	private JLabel lblUpdateTourReservation;
+	private JLabel label_4;
+	private JLabel lblDestination_1;
+	private JLabel label_6;
+	private JLabel lblDepartureTime_1;
+	private JLabel lblOfAvailable;
+	private JLabel lblBus;
+	private JTextField tourReservationNumberOfPassengersTextField;
+	private JTextField tourReservationDateOfCreationTextField;
+	private JTextField tourReservationDepartureTimeTextField;
+	private JTextField tourReservationDestinationTextField;
+	private JTextField tourReservationCustomerNameTextField;
+	private JLabel lblDateOfCreation_1;
+	private JLabel label_5;
+
 
 	/**
 	 * Launch the application.
@@ -910,19 +949,253 @@ public class Autobus extends JFrame {
 		
 		JPanel panelTopTourReservations = new JPanel();
 		panelTopTourReservations.setBackground(new Color(0, 128, 128));
+		
+		JScrollPane tourReservationScrollPane = new JScrollPane();
+		tourReservationScrollPane.setOpaque(false);
+		tourReservationScrollPane.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		tourReservationScrollPane.setBorder(new CompoundBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Tour Reservation Archive", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)), new EmptyBorder(5, 5, 5, 5)));
+		tourReservationScrollPane.setBackground(new Color(95, 158, 160));
+		
+		tourReservationTextFieldSearch = new JTextField();
+		tourReservationTextFieldSearch.setColumns(10);
+		
+		JButton tourReservationSearchButton = new JButton("Search Customer");
+		
+		panel = new JPanel();
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Update Tour Reservation", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		panel.setBackground(new Color(95, 158, 160));
+		
+		lblChauffeur = new JLabel("Chauffeur:");
+		lblChauffeur.setForeground(Color.WHITE);
+		lblChauffeur.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		tourReservationNumberOfAvailableSeatsTextField = new JTextField();
+		tourReservationNumberOfAvailableSeatsTextField.setSelectionColor(new Color(95, 158, 160));
+		tourReservationNumberOfAvailableSeatsTextField.setSelectedTextColor(Color.WHITE);
+		tourReservationNumberOfAvailableSeatsTextField.setForeground(Color.WHITE);
+		tourReservationNumberOfAvailableSeatsTextField.setColumns(10);
+		tourReservationNumberOfAvailableSeatsTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		tourReservationNumberOfAvailableSeatsTextField.setBackground(new Color(95, 158, 160));
+		
+		tourReservationBusTextField = new JTextField();
+		tourReservationBusTextField.setSelectionColor(new Color(95, 158, 160));
+		tourReservationBusTextField.setSelectedTextColor(Color.WHITE);
+		tourReservationBusTextField.setForeground(Color.WHITE);
+		tourReservationBusTextField.setColumns(10);
+		tourReservationBusTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		tourReservationBusTextField.setBackground(new Color(95, 158, 160));
+		
+		tourReservationChauffeurTextField = new JTextField();
+		tourReservationChauffeurTextField.setSelectionColor(new Color(95, 158, 160));
+		tourReservationChauffeurTextField.setSelectedTextColor(Color.WHITE);
+		tourReservationChauffeurTextField.setForeground(Color.WHITE);
+		tourReservationChauffeurTextField.setColumns(10);
+		tourReservationChauffeurTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		tourReservationChauffeurTextField.setBackground(new Color(95, 158, 160));
+		
+		lblUpdateTourReservation = new JLabel("Update Tour Reservation");
+		lblUpdateTourReservation.setForeground(Color.WHITE);
+		lblUpdateTourReservation.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		lblUpdateTourReservation.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255), 1, true), new EmptyBorder(2, 2, 2, 2)));
+		
+		label_4 = new JLabel("Customer name:");
+		label_4.setForeground(Color.WHITE);
+		label_4.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		lblDestination_1 = new JLabel("Destination:");
+		lblDestination_1.setForeground(Color.WHITE);
+		lblDestination_1.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		label_6 = new JLabel("");
+		label_6.setForeground(Color.WHITE);
+		label_6.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		lblDepartureTime_1 = new JLabel("Departure time:");
+		lblDepartureTime_1.setForeground(Color.WHITE);
+		lblDepartureTime_1.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		lblOfAvailable = new JLabel("№ of available seats:");
+		lblOfAvailable.setForeground(Color.WHITE);
+		lblOfAvailable.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		lblBus = new JLabel("Bus:");
+		lblBus.setForeground(Color.WHITE);
+		lblBus.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		tourReservationNumberOfPassengersTextField = new JTextField();
+		tourReservationNumberOfPassengersTextField.setForeground(Color.WHITE);
+		tourReservationNumberOfPassengersTextField.setColumns(10);
+		tourReservationNumberOfPassengersTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		tourReservationNumberOfPassengersTextField.setBackground(new Color(95, 158, 160));
+		
+		tourReservationDateOfCreationTextField = new JTextField();
+		tourReservationDateOfCreationTextField.setSelectionColor(new Color(95, 158, 160));
+		tourReservationDateOfCreationTextField.setSelectedTextColor(Color.WHITE);
+		tourReservationDateOfCreationTextField.setForeground(Color.WHITE);
+		tourReservationDateOfCreationTextField.setColumns(10);
+		tourReservationDateOfCreationTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		tourReservationDateOfCreationTextField.setBackground(new Color(95, 158, 160));
+		
+		tourReservationDepartureTimeTextField = new JTextField();
+		tourReservationDepartureTimeTextField.setSelectionColor(new Color(95, 158, 160));
+		tourReservationDepartureTimeTextField.setSelectedTextColor(Color.WHITE);
+		tourReservationDepartureTimeTextField.setForeground(Color.WHITE);
+		tourReservationDepartureTimeTextField.setColumns(10);
+		tourReservationDepartureTimeTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		tourReservationDepartureTimeTextField.setBackground(new Color(95, 158, 160));
+		
+		tourReservationDestinationTextField = new JTextField();
+		tourReservationDestinationTextField.setForeground(Color.WHITE);
+		tourReservationDestinationTextField.setColumns(10);
+		tourReservationDestinationTextField.setBorder(new LineBorder(Color.WHITE));
+		tourReservationDestinationTextField.setBackground(new Color(95, 158, 160));
+		
+		tourReservationCustomerNameTextField = new JTextField();
+		tourReservationCustomerNameTextField.setSelectionColor(new Color(95, 158, 160));
+		tourReservationCustomerNameTextField.setSelectedTextColor(Color.WHITE);
+		tourReservationCustomerNameTextField.setForeground(Color.WHITE);
+		tourReservationCustomerNameTextField.setColumns(10);
+		tourReservationCustomerNameTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		tourReservationCustomerNameTextField.setBackground(new Color(95, 158, 160));
+		
+		lblDateOfCreation_1 = new JLabel("Date of creation:");
+		lblDateOfCreation_1.setForeground(Color.WHITE);
+		lblDateOfCreation_1.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		label_5 = new JLabel("№ of Passengers:");
+		label_5.setForeground(Color.WHITE);
+		label_5.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+		   gl_panel.createParallelGroup(Alignment.TRAILING)
+		      .addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+		         .addContainerGap()
+		         .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		            .addComponent(label_4)
+		            .addComponent(lblDestination_1)
+		            .addComponent(label_6)
+		            .addComponent(lblDepartureTime_1)
+		            .addComponent(lblOfAvailable)
+		            .addComponent(lblBus, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(lblChauffeur, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(lblDateOfCreation_1)
+		            .addComponent(label_5, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		            .addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+		               .addComponent(tourReservationDepartureTimeTextField)
+		               .addComponent(tourReservationDestinationTextField)
+		               .addComponent(tourReservationCustomerNameTextField, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+		               .addComponent(tourReservationNumberOfPassengersTextField)
+		               .addComponent(tourReservationDateOfCreationTextField))
+		            .addComponent(tourReservationNumberOfAvailableSeatsTextField, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+		            .addGroup(gl_panel.createSequentialGroup()
+		               .addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+		                  .addComponent(tourReservationChauffeurTextField, Alignment.LEADING)
+		                  .addComponent(tourReservationBusTextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+		               .addContainerGap())))
+		      .addGroup(gl_panel.createSequentialGroup()
+		         .addContainerGap(83, Short.MAX_VALUE)
+		         .addComponent(lblUpdateTourReservation)
+		         .addGap(71))
+		);
+		gl_panel.setVerticalGroup(
+		   gl_panel.createParallelGroup(Alignment.TRAILING)
+		      .addGroup(gl_panel.createSequentialGroup()
+		         .addContainerGap()
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(label_4)
+		            .addComponent(tourReservationCustomerNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDestination_1)
+		            .addComponent(tourReservationDestinationTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(label_6)
+		            .addComponent(tourReservationNumberOfPassengersTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(label_5, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDateOfCreation_1)
+		            .addComponent(tourReservationDateOfCreationTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDepartureTime_1)
+		            .addComponent(tourReservationDepartureTimeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblOfAvailable)
+		            .addComponent(tourReservationNumberOfAvailableSeatsTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblBus, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(tourReservationBusTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblChauffeur, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(tourReservationChauffeurTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.UNRELATED)
+		         .addComponent(lblUpdateTourReservation)
+		         .addGap(145))
+		);
+		panel.setLayout(gl_panel);
 		GroupLayout gl_panelTourReservations = new GroupLayout(panelTourReservations);
 		gl_panelTourReservations.setHorizontalGroup(
-			gl_panelTourReservations.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelTourReservations.createSequentialGroup()
-					.addComponent(panelTopTourReservations, GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
-					.addGap(0))
+		   gl_panelTourReservations.createParallelGroup(Alignment.TRAILING)
+		      .addGroup(gl_panelTourReservations.createSequentialGroup()
+		         .addComponent(panelTopTourReservations, GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
+		         .addGap(0))
+		      .addGroup(gl_panelTourReservations.createSequentialGroup()
+		         .addGap(10)
+		         .addComponent(tourReservationTextFieldSearch, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addComponent(tourReservationSearchButton)
+		         .addGap(746))
+		      .addGroup(Alignment.LEADING, gl_panelTourReservations.createSequentialGroup()
+		         .addGap(10)
+		         .addComponent(tourReservationScrollPane, GroupLayout.PREFERRED_SIZE, 457, GroupLayout.PREFERRED_SIZE)
+		         .addPreferredGap(ComponentPlacement.UNRELATED)
+		         .addComponent(panel, GroupLayout.PREFERRED_SIZE, 328, GroupLayout.PREFERRED_SIZE)
+		         .addGap(221))
 		);
 		gl_panelTourReservations.setVerticalGroup(
-			gl_panelTourReservations.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelTourReservations.createSequentialGroup()
-					.addComponent(panelTopTourReservations, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(436, Short.MAX_VALUE))
+		   gl_panelTourReservations.createParallelGroup(Alignment.LEADING)
+		      .addGroup(gl_panelTourReservations.createSequentialGroup()
+		         .addComponent(panelTopTourReservations, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+		         .addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+		         .addGroup(gl_panelTourReservations.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(tourReservationTextFieldSearch, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(tourReservationSearchButton))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_panelTourReservations.createParallelGroup(Alignment.LEADING)
+		            .addComponent(tourReservationScrollPane, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(panel, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE))
+		         .addGap(146))
 		);
+		
+		tourReservationTable = new JTable();
+		tourReservationTable.setModel(new DefaultTableModel(
+		   new Object[][] {
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		   },
+		   new String[] {
+		      "Customer", "Tour Destination", "Number of Passengers", "Date of creation"
+		   }
+		));
+		tourReservationTable.getColumnModel().getColumn(1).setPreferredWidth(90);
+		tourReservationTable.getColumnModel().getColumn(2).setPreferredWidth(120);
+		tourReservationTable.getColumnModel().getColumn(3).setPreferredWidth(91);
+		tourReservationScrollPane.setViewportView(tourReservationTable);
 		
 		JLabel lblNewLabel = new JLabel("Tour reservations");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
@@ -948,42 +1221,323 @@ public class Autobus extends JFrame {
 		panelBusReservations.setBackground(new Color(95, 158, 160));
 		desktopPane.add(panelBusReservations, "name_33299908692167");
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(0, 128, 128));
+		JPanel busReservationTitlePanel = new JPanel();
+		busReservationTitlePanel.setBackground(new Color(0, 128, 128));
 		
 		JLabel labelBusReservations = new JLabel("Bus and Chauffeur reservations");
 		labelBusReservations.setForeground(Color.WHITE);
 		labelBusReservations.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
+		GroupLayout gl_busReservationTitlePanel = new GroupLayout(busReservationTitlePanel);
+		gl_busReservationTitlePanel.setHorizontalGroup(
+			gl_busReservationTitlePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_busReservationTitlePanel.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(labelBusReservations, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(610, Short.MAX_VALUE))
 		);
-		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
+		gl_busReservationTitlePanel.setVerticalGroup(
+			gl_busReservationTitlePanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_busReservationTitlePanel.createSequentialGroup()
 					.addComponent(labelBusReservations, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		panel_2.setLayout(gl_panel_2);
+		busReservationTitlePanel.setLayout(gl_busReservationTitlePanel);
+		
+		JScrollPane busReservationScrollPane = new JScrollPane();
+		busReservationScrollPane.setOpaque(false);
+		busReservationScrollPane.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		busReservationScrollPane.setBorder(new CompoundBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Bus & Chauffeur Reservation Archive", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)), new EmptyBorder(5, 5, 5, 5)));
+		busReservationScrollPane.setBackground(new Color(95, 158, 160));
+		
+		busReservationTextFieldSearch = new JTextField();
+		busReservationTextFieldSearch.setColumns(10);
+		
+		JButton busReservationButtonSearch = new JButton("Search Customer");
+		
+		JPanel busReservationUpdatePanel = new JPanel();
+		busReservationUpdatePanel.setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255), 1, true), "Update Bus & Chauffeur Reservation", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		busReservationUpdatePanel.setBackground(new Color(95, 158, 160));
+		
+		JLabel lblCustomer = new JLabel("Customer name:");
+		lblCustomer.setForeground(Color.WHITE);
+		lblCustomer.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		busReservationCustomerNameTextField = new JTextField();
+		busReservationCustomerNameTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationCustomerNameTextField.setSelectedTextColor(Color.WHITE);
+		busReservationCustomerNameTextField.setForeground(Color.WHITE);
+		busReservationCustomerNameTextField.setColumns(10);
+		busReservationCustomerNameTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationCustomerNameTextField.setBackground(new Color(95, 158, 160));
+		
+		JCheckBox chckbxExtraServices = new JCheckBox("Extra services");
+		chckbxExtraServices.setForeground(Color.WHITE);
+		chckbxExtraServices.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		chckbxExtraServices.setBackground(new Color(95, 158, 160));
+		
+		JLabel lblDepartureTime = new JLabel("Departure time:");
+		lblDepartureTime.setForeground(Color.WHITE);
+		lblDepartureTime.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		JLabel lblDuration = new JLabel("Duration:");
+		lblDuration.setForeground(Color.WHITE);
+		lblDuration.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		JLabel lblDistance = new JLabel("Distance:");
+		lblDistance.setForeground(Color.WHITE);
+		lblDistance.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		JLabel lblPickupStops = new JLabel("Pick-up stops:");
+		lblPickupStops.setForeground(Color.WHITE);
+		lblPickupStops.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		JLabel lblDropoffStops = new JLabel("Drop-off stops:");
+		lblDropoffStops.setForeground(Color.WHITE);
+		lblDropoffStops.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		busReservationDistanceTextField = new JTextField();
+		busReservationDistanceTextField.setForeground(Color.WHITE);
+		busReservationDistanceTextField.setColumns(10);
+		busReservationDistanceTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationDistanceTextField.setBackground(new Color(95, 158, 160));
+		
+		busReservationDurationTextField = new JTextField();
+		busReservationDurationTextField.setForeground(Color.WHITE);
+		busReservationDurationTextField.setColumns(10);
+		busReservationDurationTextField.setBorder(new LineBorder(Color.WHITE));
+		busReservationDurationTextField.setBackground(new Color(95, 158, 160));
+		
+		busReservationPickUpStopsTextField = new JTextField();
+		busReservationPickUpStopsTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationPickUpStopsTextField.setSelectedTextColor(Color.WHITE);
+		busReservationPickUpStopsTextField.setForeground(Color.WHITE);
+		busReservationPickUpStopsTextField.setColumns(10);
+		busReservationPickUpStopsTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationPickUpStopsTextField.setBackground(new Color(95, 158, 160));
+		
+		busReservationDropOffStopsTextField = new JTextField();
+		busReservationDropOffStopsTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationDropOffStopsTextField.setSelectedTextColor(Color.WHITE);
+		busReservationDropOffStopsTextField.setForeground(Color.WHITE);
+		busReservationDropOffStopsTextField.setColumns(10);
+		busReservationDropOffStopsTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationDropOffStopsTextField.setBackground(new Color(95, 158, 160));
+		
+		JLabel lblUpdateBus = new JLabel("Update Bus & Chauffeur Reservation");
+		lblUpdateBus.setForeground(Color.WHITE);
+		lblUpdateBus.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		lblUpdateBus.setBorder(new CompoundBorder(new LineBorder(new Color(255, 255, 255), 1, true), new EmptyBorder(2, 2, 2, 2)));
+		
+		JLabel lblArrivalTimeTo = new JLabel("Arrival time:");
+		lblArrivalTimeTo.setForeground(Color.WHITE);
+		lblArrivalTimeTo.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		lblArrivalBack = new JLabel("Arrival back:");
+		lblArrivalBack.setForeground(Color.WHITE);
+		lblArrivalBack.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		busReservationDepartureTimeTextField = new JTextField();
+		busReservationDepartureTimeTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationDepartureTimeTextField.setSelectedTextColor(Color.WHITE);
+		busReservationDepartureTimeTextField.setForeground(Color.WHITE);
+		busReservationDepartureTimeTextField.setColumns(10);
+		busReservationDepartureTimeTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationDepartureTimeTextField.setBackground(new Color(95, 158, 160));
+		
+		busReservationArrivalTimeTextField = new JTextField();
+		busReservationArrivalTimeTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationArrivalTimeTextField.setSelectedTextColor(Color.WHITE);
+		busReservationArrivalTimeTextField.setForeground(Color.WHITE);
+		busReservationArrivalTimeTextField.setColumns(10);
+		busReservationArrivalTimeTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationArrivalTimeTextField.setBackground(new Color(95, 158, 160));
+		
+		busReservationArrivalBackTextField = new JTextField();
+		busReservationArrivalBackTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationArrivalBackTextField.setSelectedTextColor(Color.WHITE);
+		busReservationArrivalBackTextField.setForeground(Color.WHITE);
+		busReservationArrivalBackTextField.setColumns(10);
+		busReservationArrivalBackTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationArrivalBackTextField.setBackground(new Color(95, 158, 160));
+		
+		lblNumberOfPassengers = new JLabel("№ of Passengers:");
+		lblNumberOfPassengers.setForeground(Color.WHITE);
+		lblNumberOfPassengers.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		lblDateOfCreation = new JLabel("Date of creation:");
+		lblDateOfCreation.setForeground(Color.WHITE);
+		lblDateOfCreation.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+		
+		busReservationNumberOfPassengersTextField = new JTextField();
+		busReservationNumberOfPassengersTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationNumberOfPassengersTextField.setSelectedTextColor(Color.WHITE);
+		busReservationNumberOfPassengersTextField.setForeground(Color.WHITE);
+		busReservationNumberOfPassengersTextField.setColumns(10);
+		busReservationNumberOfPassengersTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationNumberOfPassengersTextField.setBackground(new Color(95, 158, 160));
+		
+		busReservationDateOfCreationTextField = new JTextField();
+		busReservationDateOfCreationTextField.setSelectionColor(new Color(95, 158, 160));
+		busReservationDateOfCreationTextField.setSelectedTextColor(Color.WHITE);
+		busReservationDateOfCreationTextField.setForeground(Color.WHITE);
+		busReservationDateOfCreationTextField.setColumns(10);
+		busReservationDateOfCreationTextField.setBorder(new LineBorder(new Color(255, 255, 255)));
+		busReservationDateOfCreationTextField.setBackground(new Color(95, 158, 160));
+		GroupLayout gl_busReservationUpdatePanel = new GroupLayout(busReservationUpdatePanel);
+		gl_busReservationUpdatePanel.setHorizontalGroup(
+		   gl_busReservationUpdatePanel.createParallelGroup(Alignment.TRAILING)
+		      .addGroup(Alignment.LEADING, gl_busReservationUpdatePanel.createSequentialGroup()
+		         .addContainerGap()
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.LEADING)
+		            .addGroup(gl_busReservationUpdatePanel.createSequentialGroup()
+		               .addGap(21)
+		               .addComponent(lblUpdateBus)
+		               .addContainerGap())
+		            .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.LEADING)
+		               .addGroup(gl_busReservationUpdatePanel.createSequentialGroup()
+		                  .addComponent(chckbxExtraServices)
+		                  .addContainerGap())
+		               .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.LEADING)
+		                  .addGroup(gl_busReservationUpdatePanel.createSequentialGroup()
+		                     .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.LEADING)
+		                        .addComponent(lblCustomer)
+		                        .addComponent(lblDuration)
+		                        .addComponent(lblDistance)
+		                        .addComponent(lblDropoffStops)
+		                        .addComponent(lblDepartureTime)
+		                        .addComponent(lblArrivalTimeTo, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+		                        .addComponent(lblArrivalBack, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+		                        .addComponent(lblPickupStops))
+		                     .addGap(18)
+		                     .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.LEADING)
+		                        .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.LEADING, false)
+		                           .addComponent(busReservationDropOffStopsTextField)
+		                           .addComponent(busReservationDurationTextField)
+		                           .addComponent(busReservationCustomerNameTextField, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+		                           .addComponent(busReservationDistanceTextField)
+		                           .addComponent(busReservationPickUpStopsTextField))
+		                        .addComponent(busReservationDepartureTimeTextField, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+		                        .addGroup(gl_busReservationUpdatePanel.createSequentialGroup()
+		                           .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.TRAILING, false)
+		                              .addComponent(busReservationArrivalBackTextField, Alignment.LEADING)
+		                              .addComponent(busReservationArrivalTimeTextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+		                              .addComponent(busReservationNumberOfPassengersTextField, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
+		                           .addContainerGap())))
+		                  .addGroup(gl_busReservationUpdatePanel.createSequentialGroup()
+		                     .addComponent(lblNumberOfPassengers, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+		                     .addContainerGap(188, Short.MAX_VALUE))
+		                  .addGroup(gl_busReservationUpdatePanel.createSequentialGroup()
+		                     .addComponent(lblDateOfCreation, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+		                     .addPreferredGap(ComponentPlacement.RELATED)
+		                     .addComponent(busReservationDateOfCreationTextField, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+		                     .addContainerGap())))))
+		);
+		gl_busReservationUpdatePanel.setVerticalGroup(
+		   gl_busReservationUpdatePanel.createParallelGroup(Alignment.TRAILING)
+		      .addGroup(gl_busReservationUpdatePanel.createSequentialGroup()
+		         .addContainerGap()
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblCustomer)
+		            .addComponent(busReservationCustomerNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDuration)
+		            .addComponent(busReservationDurationTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDistance)
+		            .addComponent(busReservationDistanceTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblPickupStops)
+		            .addComponent(busReservationPickUpStopsTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDropoffStops)
+		            .addComponent(busReservationDropOffStopsTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDepartureTime)
+		            .addComponent(busReservationDepartureTimeTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblArrivalTimeTo, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(busReservationArrivalTimeTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblArrivalBack, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(busReservationArrivalBackTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblNumberOfPassengers, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(busReservationNumberOfPassengersTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.RELATED)
+		         .addGroup(gl_busReservationUpdatePanel.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(lblDateOfCreation, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(busReservationDateOfCreationTextField, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+		         .addPreferredGap(ComponentPlacement.UNRELATED)
+		         .addComponent(chckbxExtraServices)
+		         .addPreferredGap(ComponentPlacement.UNRELATED)
+		         .addComponent(lblUpdateBus)
+		         .addGap(73))
+		);
+		busReservationUpdatePanel.setLayout(gl_busReservationUpdatePanel);
 		GroupLayout gl_panelBusReservations = new GroupLayout(panelBusReservations);
 		gl_panelBusReservations.setHorizontalGroup(
-			gl_panelBusReservations.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 1000, Short.MAX_VALUE)
-				.addGroup(gl_panelBusReservations.createSequentialGroup()
-					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
-					.addGap(0))
+		   gl_panelBusReservations.createParallelGroup(Alignment.LEADING)
+		      .addGroup(gl_panelBusReservations.createSequentialGroup()
+		         .addComponent(busReservationTitlePanel, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+		         .addGap(0))
+		      .addGroup(gl_panelBusReservations.createSequentialGroup()
+		         .addContainerGap()
+		         .addComponent(busReservationTextFieldSearch, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+		         .addPreferredGap(ComponentPlacement.UNRELATED)
+		         .addComponent(busReservationButtonSearch, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+		         .addContainerGap(716, Short.MAX_VALUE))
+		      .addGroup(gl_panelBusReservations.createSequentialGroup()
+		         .addContainerGap()
+		         .addComponent(busReservationScrollPane, GroupLayout.PREFERRED_SIZE, 461, GroupLayout.PREFERRED_SIZE)
+		         .addPreferredGap(ComponentPlacement.UNRELATED)
+		         .addComponent(busReservationUpdatePanel, GroupLayout.PREFERRED_SIZE, 324, GroupLayout.PREFERRED_SIZE)
+		         .addContainerGap(195, Short.MAX_VALUE))
 		);
 		gl_panelBusReservations.setVerticalGroup(
-			gl_panelBusReservations.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 494, Short.MAX_VALUE)
-				.addGroup(gl_panelBusReservations.createSequentialGroup()
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(436, Short.MAX_VALUE))
+		   gl_panelBusReservations.createParallelGroup(Alignment.LEADING)
+		      .addGroup(gl_panelBusReservations.createSequentialGroup()
+		         .addComponent(busReservationTitlePanel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+		         .addGap(18)
+		         .addGroup(gl_panelBusReservations.createParallelGroup(Alignment.BASELINE)
+		            .addComponent(busReservationTextFieldSearch, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(busReservationButtonSearch))
+		         .addGap(10)
+		         .addGroup(gl_panelBusReservations.createParallelGroup(Alignment.LEADING)
+		            .addComponent(busReservationScrollPane, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
+		            .addComponent(busReservationUpdatePanel, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE))
+		         .addContainerGap(67, Short.MAX_VALUE))
 		);
+		
+		busReservationTable = new JTable();
+		busReservationTable.setModel(new DefaultTableModel(
+		   new Object[][] {
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		      {null, null, null, null},
+		   },
+		   new String[] {
+		      "Customer name", "Tour Destination", "Number of Passengers", "Date of creation"
+		   }
+		));
+		busReservationTable.getColumnModel().getColumn(1).setPreferredWidth(99);
+		busReservationTable.getColumnModel().getColumn(2).setPreferredWidth(126);
+		busReservationTable.getColumnModel().getColumn(3).setPreferredWidth(93);
+		busReservationScrollPane.setViewportView(busReservationTable);
 		panelBusReservations.setLayout(gl_panelBusReservations);
 		
 		panelChauffeurs = new JPanel();
