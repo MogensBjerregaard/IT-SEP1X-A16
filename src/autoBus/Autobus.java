@@ -31,6 +31,7 @@ public class Autobus extends JFrame {
 	
 	private ChauffeursArchive chauffeursArchive;
 	private BusesArchive busesArchive;
+	private ToursArchive toursArchive;
 	private JMenuItem mntmTourReservations;
 	private JMenuItem mntmBusReservations;
 	private JPanel panelTourReservations;
@@ -93,6 +94,15 @@ public class Autobus extends JFrame {
 	private JCheckBox chckbxBreakfast;
 	private JCheckBox chckbxAllInclusive;
 	private JCheckBox chckbxLunch;
+	private JTable tablePassengersForNewReservation;
+	private DefaultTableModel passengersTableModelForNewReservation;
+	private JTextField searchPassengersTextField;
+	private JTable tableCustomersForNewReservation;
+	private DefaultTableModel customersTableModelForNewReservation;
+	private JTextField searchCustomerTextField;
+	private JTable tableToursForNewReservation;
+	private DefaultTableModel toursTableModelForNewReservation;
+	private JTextField searchTourTextField;
 
 	/**
 	 * Launch the application.
@@ -547,6 +557,20 @@ public class Autobus extends JFrame {
 		rowData[4] = model;
 		rowData[5] = availableForTours;
 		busesTable.addRow(rowData);				
+	}
+	
+	public void listTours(){
+		toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel();
+		Object[] rowData = new Object[6];
+		for (int i=0; i<reservationsArchive.size(); i++){
+		rowData[0] = busesArchive.get(i).getVehicleID();
+		rowData[1] = busesArchive.get(i).getPricePerHour();
+		rowData[2] = busesArchive.get(i).getMaxNumberOfSeats();
+		rowData[3] = busesArchive.get(i).getSeatsAvailable();
+		rowData[4] = busesArchive.get(i).getModelString();
+		rowData[5] = busesArchive.get(i).isAvailableForTours();
+		toursTableModelForNewReservation.addRow(rowData);			
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1658,21 +1682,221 @@ public class Autobus extends JFrame {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panelTopNewTourReservation.setLayout(gl_panelTopNewTourReservation);
+		
+		JTabbedPane newTourReservationTabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GroupLayout gl_panelNewTourReservation = new GroupLayout(panelNewTourReservation);
 		gl_panelNewTourReservation.setHorizontalGroup(
 			gl_panelNewTourReservation.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 1000, Short.MAX_VALUE)
-				.addGroup(gl_panelNewTourReservation.createSequentialGroup()
-					.addComponent(panelTopNewTourReservation, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_panelNewTourReservation.createSequentialGroup()
+					.addGroup(gl_panelNewTourReservation.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_panelNewTourReservation.createSequentialGroup()
+							.addGap(12)
+							.addComponent(newTourReservationTabbedPanel, GroupLayout.PREFERRED_SIZE, 954, GroupLayout.PREFERRED_SIZE)
+							.addGap(34))
+						.addComponent(panelTopNewTourReservation, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE))
 					.addGap(0))
 		);
 		gl_panelNewTourReservation.setVerticalGroup(
 			gl_panelNewTourReservation.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 494, Short.MAX_VALUE)
 				.addGroup(gl_panelNewTourReservation.createSequentialGroup()
 					.addComponent(panelTopNewTourReservation, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(436, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+					.addComponent(newTourReservationTabbedPanel, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
+		
+		JPanel selectTourPanel = new JPanel();
+		selectTourPanel.setBackground(new Color(0, 153, 102));
+		newTourReservationTabbedPanel.addTab("Select Tour", null, selectTourPanel, null);
+		newTourReservationTabbedPanel.setForegroundAt(0, new Color(0, 153, 102));
+		newTourReservationTabbedPanel.setBackgroundAt(0, new Color(0, 153, 102));
+		
+		JScrollPane selectTourScrollPanel = new JScrollPane();
+		
+		JLabel lblSearchByDestination = new JLabel("Search by destination");
+		
+		searchTourTextField = new JTextField();
+		searchTourTextField.setToolTipText("enter Tour's destination here");
+		searchTourTextField.setColumns(10);
+		
+		JLabel lblNoTourWas = new JLabel("No Tour was yet selected");
+		GroupLayout gl_selectTourPanel = new GroupLayout(selectTourPanel);
+		gl_selectTourPanel.setHorizontalGroup(
+			gl_selectTourPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_selectTourPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_selectTourPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(selectTourScrollPanel, GroupLayout.PREFERRED_SIZE, 630, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_selectTourPanel.createSequentialGroup()
+							.addComponent(lblSearchByDestination)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(searchTourTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNoTourWas))
+					.addContainerGap(307, Short.MAX_VALUE))
+		);
+		gl_selectTourPanel.setVerticalGroup(
+			gl_selectTourPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_selectTourPanel.createSequentialGroup()
+					.addGap(37)
+					.addGroup(gl_selectTourPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSearchByDestination)
+						.addComponent(searchTourTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(selectTourScrollPanel, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblNoTourWas)
+					.addContainerGap(35, Short.MAX_VALUE))
+		);
+		
+		tableToursForNewReservation = new JTable();
+		selectTourScrollPanel.setViewportView(tableToursForNewReservation);
+		tableToursForNewReservation.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"Destination", "Departure date", "Number of available seats", "Bus", "Chauffeur"
+			}
+		));
+		tableToursForNewReservation.getColumnModel().getColumn(2).setPreferredWidth(158);
+		selectTourPanel.setLayout(gl_selectTourPanel);
+		
+		JPanel selectCustomerPanel = new JPanel();
+		selectCustomerPanel.setBackground(new Color(0, 153, 102));
+		newTourReservationTabbedPanel.addTab("Select Customer", null, selectCustomerPanel, null);
+		newTourReservationTabbedPanel.setForegroundAt(1, new Color(0, 153, 102));
+		
+		JScrollPane selectCustomerScrollPanel = new JScrollPane();
+		
+		JLabel lblSearchCustomer = new JLabel("Search by name");
+		
+		searchCustomerTextField = new JTextField();
+		searchCustomerTextField.setToolTipText("enter customer's name here");
+		searchCustomerTextField.setColumns(10);
+		
+		JLabel lblNoCustomerWas = new JLabel("No customer was yet selected");
+		lblNoCustomerWas.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GroupLayout gl_selectCustomerPanel = new GroupLayout(selectCustomerPanel);
+		gl_selectCustomerPanel.setHorizontalGroup(
+			gl_selectCustomerPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_selectCustomerPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_selectCustomerPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(lblNoCustomerWas, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(selectCustomerScrollPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_selectCustomerPanel.createSequentialGroup()
+							.addComponent(lblSearchCustomer)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(searchCustomerTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(356, Short.MAX_VALUE))
+		);
+		gl_selectCustomerPanel.setVerticalGroup(
+			gl_selectCustomerPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_selectCustomerPanel.createSequentialGroup()
+					.addGap(29)
+					.addGroup(gl_selectCustomerPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSearchCustomer)
+						.addComponent(searchCustomerTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(selectCustomerScrollPanel, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addComponent(lblNoCustomerWas, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		tableCustomersForNewReservation = new JTable();
+		tableCustomersForNewReservation.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"Full name", "Phone number", "Address", "Date of birth", "Email"
+			}
+		));
+		selectCustomerScrollPanel.setViewportView(tableCustomersForNewReservation);
+		selectCustomerPanel.setLayout(gl_selectCustomerPanel);
+		
+		JPanel selectPassengersPanel = new JPanel();
+		selectPassengersPanel.setBackground(new Color(0, 153, 102));
+		newTourReservationTabbedPanel.addTab("Select Passengers", null, selectPassengersPanel, null);
+		newTourReservationTabbedPanel.setForegroundAt(2, new Color(0, 153, 102));
+		
+		JScrollPane selectPassengersScrollPanel = new JScrollPane();
+		
+		JLabel lblSearchPassengers = new JLabel("Search by name");
+		
+		searchPassengersTextField = new JTextField();
+		searchPassengersTextField.setToolTipText("enter customer's name here");
+		searchPassengersTextField.setColumns(10);
+		
+		JLabel lblPassengersSelected = new JLabel("No passenger was yet selected");
+		lblPassengersSelected.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GroupLayout gl_selectPassengersPanel = new GroupLayout(selectPassengersPanel);
+		gl_selectPassengersPanel.setHorizontalGroup(
+			gl_selectPassengersPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_selectPassengersPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_selectPassengersPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(lblPassengersSelected, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(selectPassengersScrollPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_selectPassengersPanel.createSequentialGroup()
+							.addComponent(lblSearchPassengers)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(searchPassengersTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(356, Short.MAX_VALUE))
+		);
+		gl_selectPassengersPanel.setVerticalGroup(
+			gl_selectPassengersPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_selectPassengersPanel.createSequentialGroup()
+					.addGap(20)
+					.addGroup(gl_selectPassengersPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSearchPassengers)
+						.addComponent(searchPassengersTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(selectPassengersScrollPanel, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+					.addGap(29)
+					.addComponent(lblPassengersSelected, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		tablePassengersForNewReservation = new JTable();
+		tablePassengersForNewReservation.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"Full name", "Phone number", "Address", "Date of birth", "Email"
+			}
+		));
+		selectPassengersScrollPanel.setViewportView(tablePassengersForNewReservation);
+		selectPassengersPanel.setLayout(gl_selectPassengersPanel);
 		panelNewTourReservation.setLayout(gl_panelNewTourReservation);
 		
 		panelNewBusReservation = new JPanel();
