@@ -1,8 +1,9 @@
 package autoBus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Reservation {
+public abstract class Reservation implements Serializable {
     private String RESERVATION_ID; //CAN WE SOMEHOW MAKE THIS FIELD FINAL?
 
     private double discount;
@@ -11,11 +12,16 @@ public abstract class Reservation {
 
     private ArrayList<Passenger> listOfPassengers;
 
+    public Reservation(String RESERVATION_ID, double discount, Customer customer, ArrayList<Passenger> listOfPassengers) {
+        this.RESERVATION_ID = RESERVATION_ID;
+        this.discount = discount;
+        this.customer = customer;
+        this.listOfPassengers = listOfPassengers;
+    }
 
     public String getRESERVATION_ID() {
         return RESERVATION_ID;
     }
-
     public double getDiscount() {
         return discount;
     }
@@ -42,7 +48,7 @@ public abstract class Reservation {
 
     @Override
     public String toString() {
-        return  RESERVATION_ID + ": " + customer;
+        return  RESERVATION_ID + ": " + customer.toString();
 
     }
 

@@ -32,7 +32,8 @@ public class Autobus extends JFrame {
 	private JMenuItem mntmAboutAutobus;
 	private JMenuItem mntmExit;
 	private ImageIcon icon;
-	
+
+	private ReservationsArchive reservationsArchive;
 	private ChauffeursArchive chauffeursArchive;
 	private BusesArchive busesArchive;
 	private ToursArchive toursArchive;
@@ -220,7 +221,7 @@ public class Autobus extends JFrame {
 			listTours();
 		}
 
-		customersArchive = new CustomersArchive();
+		/*customersArchive = new CustomersArchive();
 		if (customersArchive.isFileFound()){
 			customersArchive.load();
 			listCustomers();
@@ -236,7 +237,7 @@ public class Autobus extends JFrame {
 		} else {
 			passengersArchive.createFile();
 			listPassengers();
-		}
+		}*/
 	}
 
 
@@ -244,6 +245,20 @@ public class Autobus extends JFrame {
 	// This method contains all code for creating events
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void createEvents() {
+
+
+		/*lblCreateReservationButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				if (!lblSelectedPassengers.getText().equals("Passengers:") && !lblSelectedTour.getText().equals("Tour:")
+					&& !lblSelectedCustomer.getText().equals("Customer:")){
+					reservationsArchive.add(new TourReservation(0, customersArchive.get()))
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You need first to select the Tour's row!");
+				}
+			}
+		});*/
 
 		lblSelectTourButton.addMouseListener(new MouseAdapter() {
 			@Override
