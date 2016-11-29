@@ -1,13 +1,13 @@
 package autoBus;
 
 public abstract class Person{
-	private String name;
-	private String email;
-	private String address;
-	private Date birthday;
+	String name;
+	String email;
+	String address;
+	String phoneNumber;
+	Date birthday;
 	
-	public Person(String name, String email, String address, Date birthday) {
-		super();
+	public Person(String name, String phoneNumber, String email, String address, Date birthday) {
 		this.name = name;
 		this.email = email;
 		this.address = address;

@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.border.BevelBorder;
 
 public class Autobus extends JFrame {
 
@@ -35,6 +36,8 @@ public class Autobus extends JFrame {
 	private ChauffeursArchive chauffeursArchive;
 	private BusesArchive busesArchive;
 	private ToursArchive toursArchive;
+	private CustomersArchive customersArchive;
+	private PassengersArchive passengersArchive;
 	private JMenuItem mntmTourReservations;
 	private JMenuItem mntmBusReservations;
 	private JPanel panelTourReservations;
@@ -106,6 +109,15 @@ public class Autobus extends JFrame {
 	private JTable tableToursForNewReservation;
 	private DefaultTableModel toursTableModelForNewReservation;
 	private JTextField searchTourTextField;
+	private JLabel lblSelectedTour;
+	private JLabel lblSelectedCustomer;
+	private JLabel lblSelectedPassengers;
+	private JLabel lblCreateReservationButton;
+	private JLabel lblSearchCustomerByName;
+	private JLabel lblSelectCustomerButton;
+	private JLabel lblSelectPassengersButton;
+	private JLabel lblSearchPassengersByName;
+	private JLabel lblSelectTourButton;
 
 	/**
 	 * Launch the application.
@@ -168,8 +180,24 @@ public class Autobus extends JFrame {
 			toursArchive.createFile();
 			listTours();
 		}
-		
-		
+
+		customersArchive = new CustomersArchive();
+		if (customersArchive.isFileFound()){
+			customersArchive.load();
+			listCustomers();
+		} else {
+			customersArchive.createFile();
+			listCustomers();
+		}
+
+		passengersArchive = new PassengersArchive();
+		if (passengersArchive.isFileFound()){
+			passengersArchive.load();
+			listPassengers();
+		} else {
+			passengersArchive.createFile();
+			listPassengers();
+		}
 	}
 
 
@@ -178,6 +206,52 @@ public class Autobus extends JFrame {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void createEvents() {
 
+		lblSelectTourButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				int index = tableToursForNewReservation.getSelectedRow();
+				if (index!=-1){
+					lblSelectedTour.setText("Tour: " + toursArchive.getListOfTours().get(index).getDestination()
+											/*+ " " + toursArchive.getListOfTours().get(index).getDateInterval().getStartDate()*/);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You need first to select the Tour's row!");
+				}
+			}
+		});
+
+		lblSelectCustomerButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				int index = tableCustomersForNewReservation.getSelectedRow();
+				if (index!=-1){
+					lblSelectedCustomer.setText("Customer: " + customersArchive.getListOfCustomers().get(index).getName());
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You need first to select the Customer's row!");
+				}
+			}
+		});
+
+		lblSelectPassengersButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				int[] indexes = tablePassengersForNewReservation.getSelectedRows();
+				if (indexes!= null){
+					if(indexes.length == 1) {
+						lblSelectedPassengers.setText("Passenger: " + passengersArchive.getListOfPassengers().get(indexes[0]).getName());
+					}
+					else{
+						lblSelectedPassengers.setText("Passenger: " + indexes.length +" persons");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You need first to select at least one Passenger's row!");
+				}
+			}
+		});
+		
+		
 		searchTourTextField.getDocument().addDocumentListener(new DocumentListener() {
 																public  void deleteAllRows(final DefaultTableModel model) {
 																	for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
@@ -701,6 +775,31 @@ public class Autobus extends JFrame {
 		rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
 		rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
 		toursTableModelForNewReservation.addRow(rowData);
+		}
+	}
+
+	public void listPassengers(){
+		customersTableModelForNewReservation = (DefaultTableModel) tableCustomersForNewReservation.getModel();
+		Object[] rowData = new Object[5];
+		for (int i=0; i < customersArchive.getListOfCustomers().size(); i++){
+			rowData[0] = customersArchive.getListOfCustomers().get(i).getName();
+			rowData[1] = customersArchive.getListOfCustomers().get(i).getPhoneNumber();
+			rowData[2] = customersArchive.getListOfCustomers().get(i).getAddress();
+			rowData[3] = customersArchive.getListOfCustomers().get(i).getBirthday();
+			rowData[4] = customersArchive.getListOfCustomers().get(i).getEmail();
+			customersTableModelForNewReservation.addRow(rowData);
+		}
+	}
+
+	public void listCustomers(){
+		passengersTableModelForNewReservation = (DefaultTableModel) tablePassengersForNewReservation.getModel();
+		Object[] rowData = new Object[4];
+		for (int i=0; i < passengersArchive.getListOfPassengers().size(); i++){
+			rowData[0] = passengersArchive.getListOfPassengers().get(i).getName();
+			rowData[1] = passengersArchive.getListOfPassengers().get(i).getAddress();
+			rowData[2] = passengersArchive.getListOfPassengers().get(i).getBirthday();
+			rowData[3] = passengersArchive.getListOfPassengers().get(i).getEmail();
+			customersTableModelForNewReservation.addRow(rowData);
 		}
 	}
 
@@ -1815,29 +1914,70 @@ public class Autobus extends JFrame {
 		panelTopNewTourReservation.setLayout(gl_panelTopNewTourReservation);
 		
 		JTabbedPane newTourReservationTabbedPanel = new JTabbedPane(JTabbedPane.TOP);
+		
+		lblSelectedTour = new JLabel("Tour:");
+		lblSelectedTour.setForeground(new Color(255, 255, 255));
+		lblSelectedTour.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		lblSelectedTour.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblSelectedCustomer = new JLabel("Customer:");
+		lblSelectedCustomer.setForeground(Color.WHITE);
+		lblSelectedCustomer.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSelectedCustomer.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		
+		lblSelectedPassengers = new JLabel("Passengers:");
+		lblSelectedPassengers.setForeground(Color.WHITE);
+		lblSelectedPassengers.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSelectedPassengers.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		
+		lblCreateReservationButton = new JLabel("Create reservation");
+		lblCreateReservationButton.setForeground(Color.WHITE);
+		lblCreateReservationButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCreateReservationButton.setBorder(new LineBorder(new Color(255, 255, 255), 2));
 		GroupLayout gl_panelNewTourReservation = new GroupLayout(panelNewTourReservation);
 		gl_panelNewTourReservation.setHorizontalGroup(
-			gl_panelNewTourReservation.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panelNewTourReservation.createSequentialGroup()
-					.addGroup(gl_panelNewTourReservation.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_panelNewTourReservation.createSequentialGroup()
-							.addGap(12)
-							.addComponent(newTourReservationTabbedPanel, GroupLayout.PREFERRED_SIZE, 954, GroupLayout.PREFERRED_SIZE)
-							.addGap(34))
-						.addComponent(panelTopNewTourReservation, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE))
+			gl_panelNewTourReservation.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panelNewTourReservation.createSequentialGroup()
+					.addComponent(panelTopNewTourReservation, GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
 					.addGap(0))
+				.addGroup(Alignment.LEADING, gl_panelNewTourReservation.createSequentialGroup()
+					.addGap(12)
+					.addComponent(newTourReservationTabbedPanel, GroupLayout.PREFERRED_SIZE, 654, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_panelNewTourReservation.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelNewTourReservation.createSequentialGroup()
+							.addGap(18)
+							.addGroup(gl_panelNewTourReservation.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblSelectedTour, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblSelectedCustomer, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblSelectedPassengers, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panelNewTourReservation.createSequentialGroup()
+							.addGap(73)
+							.addComponent(lblCreateReservationButton)))
+					.addGap(37))
 		);
 		gl_panelNewTourReservation.setVerticalGroup(
 			gl_panelNewTourReservation.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelNewTourReservation.createSequentialGroup()
 					.addComponent(panelTopNewTourReservation, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-					.addComponent(newTourReservationTabbedPanel, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+					.addGroup(gl_panelNewTourReservation.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelNewTourReservation.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(newTourReservationTabbedPanel, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(51, Short.MAX_VALUE))
+						.addGroup(gl_panelNewTourReservation.createSequentialGroup()
+							.addGap(32)
+							.addComponent(lblSelectedTour, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblSelectedCustomer, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblSelectedPassengers, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+							.addComponent(lblCreateReservationButton, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+							.addGap(59))))
 		);
 		
 		JPanel selectTourPanel = new JPanel();
-		selectTourPanel.setBackground(new Color(0, 153, 102));
+		selectTourPanel.setBackground(new Color(0, 153, 153));
 		newTourReservationTabbedPanel.addTab("Select Tour", null, selectTourPanel, null);
 		newTourReservationTabbedPanel.setForegroundAt(0, new Color(0, 153, 102));
 		newTourReservationTabbedPanel.setBackgroundAt(0, new Color(0, 153, 102));
@@ -1845,25 +1985,33 @@ public class Autobus extends JFrame {
 		JScrollPane selectTourScrollPanel = new JScrollPane();
 		
 		JLabel lblSearchByDestination = new JLabel("Search by destination");
+		lblSearchByDestination.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		lblSearchByDestination.setForeground(new Color(255, 255, 255));
+		lblSearchByDestination.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		searchTourTextField = new JTextField();
+		searchTourTextField.setBorder(new LineBorder(new Color(171, 173, 179), 2));
 		searchTourTextField.setToolTipText("enter Tour's destination here");
 		searchTourTextField.setColumns(10);
 		
-		JLabel lblNoTourWas = new JLabel("No Tour was yet selected");
+		lblSelectTourButton = new JLabel("Select");
+		lblSelectTourButton.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSelectTourButton.setForeground(Color.WHITE);
+		lblSelectTourButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSelectTourButton.setBorder(new LineBorder(new Color(255, 255, 255), 2));
 		GroupLayout gl_selectTourPanel = new GroupLayout(selectTourPanel);
 		gl_selectTourPanel.setHorizontalGroup(
 			gl_selectTourPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_selectTourPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_selectTourPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(selectTourScrollPanel, GroupLayout.PREFERRED_SIZE, 630, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_selectTourPanel.createSequentialGroup()
 							.addComponent(lblSearchByDestination)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGap(18)
 							.addComponent(searchTourTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNoTourWas))
-					.addContainerGap(307, Short.MAX_VALUE))
+						.addComponent(selectTourScrollPanel, GroupLayout.PREFERRED_SIZE, 630, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSelectTourButton, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_selectTourPanel.setVerticalGroup(
 			gl_selectTourPanel.createParallelGroup(Alignment.LEADING)
@@ -1871,15 +2019,16 @@ public class Autobus extends JFrame {
 					.addGap(37)
 					.addGroup(gl_selectTourPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSearchByDestination)
-						.addComponent(searchTourTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(searchTourTextField, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addComponent(selectTourScrollPanel, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(lblNoTourWas)
-					.addContainerGap(35, Short.MAX_VALUE))
+					.addComponent(lblSelectTourButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(22, Short.MAX_VALUE))
 		);
 		
 		tableToursForNewReservation = new JTable();
+		tableToursForNewReservation.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableToursForNewReservation.setShowVerticalLines(false);
 		selectTourScrollPanel.setViewportView(tableToursForNewReservation);
 		tableToursForNewReservation.setModel(new DefaultTableModel(
@@ -1893,49 +2042,57 @@ public class Autobus extends JFrame {
 		selectTourPanel.setLayout(gl_selectTourPanel);
 		
 		JPanel selectCustomerPanel = new JPanel();
-		selectCustomerPanel.setBackground(new Color(0, 153, 102));
+		selectCustomerPanel.setBackground(new Color(0, 153, 153));
 		newTourReservationTabbedPanel.addTab("Select Customer", null, selectCustomerPanel, null);
 		newTourReservationTabbedPanel.setForegroundAt(1, new Color(0, 153, 102));
 		
 		JScrollPane selectCustomerScrollPanel = new JScrollPane();
 		
-		JLabel lblSearchCustomer = new JLabel("Search by name");
-		
 		searchCustomerTextField = new JTextField();
 		searchCustomerTextField.setToolTipText("enter customer's name here");
 		searchCustomerTextField.setColumns(10);
 		
-		JLabel lblNoCustomerWas = new JLabel("No customer was yet selected");
-		lblNoCustomerWas.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSearchCustomerByName = new JLabel("Search by name");
+		lblSearchCustomerByName.setForeground(Color.WHITE);
+		lblSearchCustomerByName.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblSearchCustomerByName.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		
+		lblSelectCustomerButton = new JLabel("Select");
+		lblSelectCustomerButton.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSelectCustomerButton.setForeground(Color.WHITE);
+		lblSelectCustomerButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSelectCustomerButton.setBorder(new LineBorder(new Color(255, 255, 255), 2));
 		GroupLayout gl_selectCustomerPanel = new GroupLayout(selectCustomerPanel);
 		gl_selectCustomerPanel.setHorizontalGroup(
 			gl_selectCustomerPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_selectCustomerPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_selectCustomerPanel.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblNoCustomerWas, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(selectCustomerScrollPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_selectCustomerPanel.createSequentialGroup()
-							.addComponent(lblSearchCustomer)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(searchCustomerTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(356, Short.MAX_VALUE))
+					.addGroup(gl_selectCustomerPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_selectCustomerPanel.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(selectCustomerScrollPanel, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+							.addGroup(gl_selectCustomerPanel.createSequentialGroup()
+								.addComponent(lblSearchCustomerByName, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(searchCustomerTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(lblSelectCustomerButton, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(56, Short.MAX_VALUE))
 		);
 		gl_selectCustomerPanel.setVerticalGroup(
 			gl_selectCustomerPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_selectCustomerPanel.createSequentialGroup()
-					.addGap(29)
-					.addGroup(gl_selectCustomerPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblSearchCustomer)
-						.addComponent(searchCustomerTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(28)
+					.addGroup(gl_selectCustomerPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(searchCustomerTextField)
+						.addComponent(lblSearchCustomerByName, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
 					.addGap(18)
 					.addComponent(selectCustomerScrollPanel, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(lblNoCustomerWas, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-					.addContainerGap())
+					.addGap(26)
+					.addComponent(lblSelectCustomerButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(25, Short.MAX_VALUE))
 		);
 		
 		tableCustomersForNewReservation = new JTable();
+		tableCustomersForNewReservation.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableCustomersForNewReservation.setShowVerticalLines(false);
 		tableCustomersForNewReservation.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -1948,55 +2105,63 @@ public class Autobus extends JFrame {
 		selectCustomerPanel.setLayout(gl_selectCustomerPanel);
 		
 		JPanel selectPassengersPanel = new JPanel();
-		selectPassengersPanel.setBackground(new Color(0, 153, 102));
+		selectPassengersPanel.setBackground(new Color(0, 153, 153));
 		newTourReservationTabbedPanel.addTab("Select Passengers", null, selectPassengersPanel, null);
 		newTourReservationTabbedPanel.setForegroundAt(2, new Color(0, 153, 102));
 		
 		JScrollPane selectPassengersScrollPanel = new JScrollPane();
 		
-		JLabel lblSearchPassengers = new JLabel("Search by name");
-		
 		searchPassengersTextField = new JTextField();
 		searchPassengersTextField.setToolTipText("enter customer's name here");
 		searchPassengersTextField.setColumns(10);
 		
-		JLabel lblPassengersSelected = new JLabel("No passenger was yet selected");
-		lblPassengersSelected.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSelectPassengersButton = new JLabel("Select");
+		lblSelectPassengersButton.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSelectPassengersButton.setForeground(Color.WHITE);
+		lblSelectPassengersButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSelectPassengersButton.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		
+		lblSearchPassengersByName = new JLabel("Search by name");
+		lblSearchPassengersByName.setForeground(Color.WHITE);
+		lblSearchPassengersByName.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblSearchPassengersByName.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		GroupLayout gl_selectPassengersPanel = new GroupLayout(selectPassengersPanel);
 		gl_selectPassengersPanel.setHorizontalGroup(
 			gl_selectPassengersPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_selectPassengersPanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_selectPassengersPanel.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblPassengersSelected, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(selectPassengersScrollPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_selectPassengersPanel.createSequentialGroup()
-							.addComponent(lblSearchPassengers)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(searchPassengersTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(356, Short.MAX_VALUE))
+					.addGroup(gl_selectPassengersPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_selectPassengersPanel.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(selectPassengersScrollPanel, GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+							.addGroup(gl_selectPassengersPanel.createSequentialGroup()
+								.addComponent(lblSearchPassengersByName, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(searchPassengersTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(lblSelectPassengersButton, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(56, Short.MAX_VALUE))
 		);
 		gl_selectPassengersPanel.setVerticalGroup(
 			gl_selectPassengersPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_selectPassengersPanel.createSequentialGroup()
-					.addGap(20)
-					.addGroup(gl_selectPassengersPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblSearchPassengers)
-						.addComponent(searchPassengersTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(19)
+					.addGroup(gl_selectPassengersPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(searchPassengersTextField)
+						.addComponent(lblSearchPassengersByName, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
 					.addGap(18)
 					.addComponent(selectPassengersScrollPanel, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-					.addGap(29)
-					.addComponent(lblPassengersSelected, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-					.addContainerGap())
+					.addPreferredGap(ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+					.addComponent(lblSelectPassengersButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(29))
 		);
 		
 		tablePassengersForNewReservation = new JTable();
+		tablePassengersForNewReservation.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		tablePassengersForNewReservation.setShowVerticalLines(false);
 		tablePassengersForNewReservation.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Full name", "Phone number", "Address", "Date of birth", "Email"
+				"Full name", "Address", "Date of birth", "Email"
 			}
 		));
 		selectPassengersScrollPanel.setViewportView(tablePassengersForNewReservation);
