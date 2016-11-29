@@ -1,10 +1,7 @@
 package autoBus;
 
 import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,7 +10,9 @@ import java.util.ArrayList;
 /**
  * Created by lenovo on 11/29/2016.
  */
-public class PassengersArchive {
+public class PassengersArchive implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private ArrayList<Passenger> listOfPassengers;
 
     public ArrayList<Passenger> getListOfPassengers() {
@@ -79,7 +78,7 @@ public class PassengersArchive {
     }
 
     public void createFile() throws Exception{
-        listOfPassengers.add(new Passenger("","","","",new Date(0,0,0)));
+        listOfPassengers.add(new Passenger("","","",new Date(0,0,0)));
         save();
         listOfPassengers.remove(0);
         save();

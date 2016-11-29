@@ -1,13 +1,15 @@
 package autoBus;
 
-public abstract class Person{
+import java.io.Serializable;
+
+public abstract class Person implements Serializable{
+	private static final long serialVersionUID = 1L;
 	String name;
 	String email;
 	String address;
-	String phoneNumber;
 	Date birthday;
 	
-	public Person(String name, String phoneNumber, String email, String address, Date birthday) {
+	public Person(String name,String email, String address, Date birthday) {
 		this.name = name;
 		this.email = email;
 		this.address = address;

@@ -1,16 +1,15 @@
 package autoBus;
 
 import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class ReservationsArchive {
+public class ReservationsArchive implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private ArrayList<Reservation> listOfReservations;
 
     public Reservation get(String RESERVATION_ID){

@@ -1,13 +1,17 @@
 package autoBus;
 
-public class Customer extends Person {
+import java.io.Serializable;
+
+public class Customer extends Person implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private int numberOfReservations;
     private String phoneNumber;
 
     public Customer(String name,String phoneNumber, String email, String address, Date birthday) {
-        super(name, phoneNumber, email, address, birthday);
+        super(name, email, address, birthday);
         this.numberOfReservations = 0;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPhoneNumber() {
