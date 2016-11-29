@@ -6,25 +6,41 @@ import java.util.ArrayList;
 public class Tour implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-		String destination;
-		ArrayList<String> pickUpPlaces;
-		double pricePerPassenger;
-		Services services;
-		ChauffeursArchive chauffeursArchive;
-		BusesArchive busesArchive;
-		DateInterval dateInterval;
-		
-		public Tour(String destination) throws Exception{
-			this.destination=destination;
-			pickUpPlaces = new ArrayList<>();
-			pricePerPassenger = 0;
-			services = new Services();
-			chauffeursArchive = new ChauffeursArchive();
-			busesArchive = new BusesArchive();
-			dateInterval = new DateInterval();
-		}
+	private	String destination;
+	private	ArrayList<String> pickUpPlaces;
+	private double pricePerPassenger;
+	private	Services services;
+	private	Chauffeur chauffeur;
+	private	Bus bus;
+	private	DateInterval dateInterval;
 
-		public String getDestination() {
+	public Tour(String destination, ArrayList<String> pickUpPlaces, double pricePerPassenger, Services services, Chauffeur chauffeur, Bus bus, DateInterval dateInterval) {
+		this.destination = destination;
+		this.pickUpPlaces = pickUpPlaces;
+		this.pricePerPassenger = pricePerPassenger;
+		this.services = services;
+		this.chauffeur = chauffeur;
+		this.bus = bus;
+		this.dateInterval = dateInterval;
+	}
+
+	public Chauffeur getChauffeur() {
+		return chauffeur;
+	}
+
+	public Bus getBus() {
+		return bus;
+	}
+
+	public void setChauffeur(Chauffeur chauffeur) {
+		this.chauffeur = chauffeur;
+	}
+
+	public void setBus(Bus bus) {
+		this.bus = bus;
+	}
+
+	public String getDestination() {
 			return destination;
 		}
 

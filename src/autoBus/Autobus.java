@@ -152,6 +152,15 @@ public class Autobus extends JFrame {
 			busesArchive.createFile();
 			listBuses();
 		}
+
+	/*	toursArchive = new ToursArchive();
+		if (toursArchive.isFileFound()){
+			toursArchive.load();
+			listTours();
+		} else {
+			toursArchive.createFile();
+			listTours();
+		}*/
 		
 		
 	}
@@ -561,15 +570,14 @@ public class Autobus extends JFrame {
 	
 	public void listTours(){
 		toursTableModelForNewReservation = (DefaultTableModel) tableToursForNewReservation.getModel();
-		Object[] rowData = new Object[6];
-		for (int i=0; i<reservationsArchive.size(); i++){
-		rowData[0] = busesArchive.get(i).getVehicleID();
-		rowData[1] = busesArchive.get(i).getPricePerHour();
-		rowData[2] = busesArchive.get(i).getMaxNumberOfSeats();
-		rowData[3] = busesArchive.get(i).getSeatsAvailable();
-		rowData[4] = busesArchive.get(i).getModelString();
-		rowData[5] = busesArchive.get(i).isAvailableForTours();
-		toursTableModelForNewReservation.addRow(rowData);			
+		Object[] rowData = new Object[5];
+		for (int i=0; i < toursArchive.getListOfTours().size(); i++){
+		rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
+		rowData[1] = toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();
+		rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
+		rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
+		rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
+		toursTableModelForNewReservation.addRow(rowData);
 		}
 	}
 

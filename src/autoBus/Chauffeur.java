@@ -18,6 +18,8 @@ public class Chauffeur implements Serializable{
 	private boolean externalEmployee;
 	private boolean available;
 	private boolean onlyOneDayTrips;
+
+	public Chauffeur(){}
 	
 	public Chauffeur(String name, String email, String address, int month, int day, int year, String phonenumber, String employeeNumber,
 			boolean externalEmployee, boolean onlyOneDayTrips) {

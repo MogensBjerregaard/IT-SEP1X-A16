@@ -1,6 +1,10 @@
 package autoBus;
 
-public class DateInterval {
+import java.io.Serializable;
+
+public class DateInterval implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private Date startDate;
 	private Date endDate;
 	

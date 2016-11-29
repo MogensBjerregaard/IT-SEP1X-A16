@@ -11,7 +11,8 @@ public class Bus implements Serializable{
 	private double pricePerHour;
 	private String model;
 	private boolean availableForTours;
-	
+
+	public Bus(){}
 	public Bus(int maxNumberOfSeats, String vehicleID, double pricePerHour, String model){
 		this.maxNumberOfSeats=maxNumberOfSeats;
 		this.seatsAvailable=maxNumberOfSeats;

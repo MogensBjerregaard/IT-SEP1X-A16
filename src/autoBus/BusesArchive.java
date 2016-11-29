@@ -38,7 +38,7 @@ public class BusesArchive implements Serializable{
 	}
 	
 	public boolean isFileFound(){
-		Path path = Paths.get("C:\\Autobus\\BusesArchive.dat");
+		Path path = Paths.get("C:\\AutoBus\\BusesArchive.dat");
 		return (Files.exists(path));
 	}
 	
@@ -50,7 +50,7 @@ public class BusesArchive implements Serializable{
 	}
 	
 	public void saveBusesArchive() throws Exception{
-		Path path = Paths.get("C:\\Autobus");
+		Path path = Paths.get("C:\\AutoBus");
 		if (!Files.exists(path)){
 			try {
 				Files.createDirectory(path);
@@ -58,7 +58,7 @@ public class BusesArchive implements Serializable{
 				JOptionPane.showMessageDialog(null, "Error: Unable to create directory!");
 			}		
 		}
-		FileOutputStream fileOutputStream = new FileOutputStream("C:\\Autobus\\BusesArchive.dat");
+		FileOutputStream fileOutputStream = new FileOutputStream("C:\\AutoBus\\BusesArchive.dat");
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 		try {
 			objectOutputStream.writeObject(busesArchive);
@@ -70,7 +70,7 @@ public class BusesArchive implements Serializable{
 	
 	@SuppressWarnings("unchecked")
 	public void loadBusesArchive() throws Exception{
-		FileInputStream fileInputStream = new FileInputStream("C:\\Autobus\\BusesArchive.dat");
+		FileInputStream fileInputStream = new FileInputStream("C:\\AutoBus\\BusesArchive.dat");
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 		try {
 			ArrayList<Bus> otherBusesArchive = (ArrayList<Bus>)objectInputStream.readObject();//how to check if instance of ArrayList<Bus>??

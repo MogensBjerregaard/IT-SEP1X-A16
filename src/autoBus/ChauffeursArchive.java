@@ -39,7 +39,7 @@ public class ChauffeursArchive implements Serializable{
 	}
 	
 	public boolean isFileFound(){
-		Path path = Paths.get("C:\\Autobus\\ChauffeursArchive.dat");
+		Path path = Paths.get("C:\\AutoBus\\ChauffeursArchive.dat");
 		return (Files.exists(path));
 	}
 	
@@ -51,7 +51,7 @@ public class ChauffeursArchive implements Serializable{
 	}
 	
 	public void saveChauffeursArchive() throws Exception{
-		Path path = Paths.get("C:\\Autobus");
+		Path path = Paths.get("C:\\AutoBus");
 		if (!Files.exists(path)){
 			try {
 				Files.createDirectory(path);
@@ -59,7 +59,7 @@ public class ChauffeursArchive implements Serializable{
 				JOptionPane.showMessageDialog(null, "Error: Unable to create directory!");
 			}		
 		}
-		FileOutputStream fileOutputStream = new FileOutputStream("C:\\Autobus\\ChauffeursArchive.dat");
+		FileOutputStream fileOutputStream = new FileOutputStream("C:\\AutoBus\\ChauffeursArchive.dat");
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 		try {
 			objectOutputStream.writeObject(chauffeursArchive);
@@ -78,7 +78,7 @@ public class ChauffeursArchive implements Serializable{
 	
 	@SuppressWarnings("unchecked")
 	public void loadChauffeursArchive() throws Exception{
-		FileInputStream fileInputStream = new FileInputStream("C:\\Autobus\\ChauffeursArchive.dat");
+		FileInputStream fileInputStream = new FileInputStream("C:\\AutoBus\\ChauffeursArchive.dat");
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 		try {
 			ArrayList<Chauffeur> otherChauffeursArchive = (ArrayList<Chauffeur>)objectInputStream.readObject();//how to check if instance of ArrayList<Chauffeur>??
