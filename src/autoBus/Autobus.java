@@ -915,7 +915,7 @@ public class Autobus extends JFrame {
 			rowData[1] = passengersArchive.getListOfPassengers().get(i).getAddress();
 			rowData[2] = passengersArchive.getListOfPassengers().get(i).getBirthday();
 			rowData[3] = passengersArchive.getListOfPassengers().get(i).getEmail();
-			customersTableModelForNewReservation.addRow(rowData);
+			passengersTableModelForNewReservation.addRow(rowData);
 		}
 	}
 
