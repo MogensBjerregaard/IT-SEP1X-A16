@@ -162,7 +162,7 @@ public class Autobus extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		EventQueue.invokeLater(() ->{
 			Autobus frame = null;
 			try {
@@ -172,6 +172,8 @@ public class Autobus extends JFrame {
 			}
 			frame.setVisible(true);
 		});
+	   /*Autobus frame = new Autobus();
+	   frame.setVisible(true);*/
 		
 	}
 
@@ -221,7 +223,7 @@ public class Autobus extends JFrame {
 			listTours();
 		}
 
-		/*customersArchive = new CustomersArchive();
+		customersArchive = new CustomersArchive();
 		if (customersArchive.isFileFound()){
 			customersArchive.load();
 			listCustomers();
@@ -237,7 +239,7 @@ public class Autobus extends JFrame {
 		} else {
 			passengersArchive.createFile();
 			listPassengers();
-		}*/
+		}
 	}
 
 
@@ -832,7 +834,7 @@ public class Autobus extends JFrame {
 		}
 	}
 
-	public void listPassengers(){
+	public void listCustomers(){
 		customersTableModelForNewReservation = (DefaultTableModel) tableCustomersForNewReservation.getModel();
 		Object[] rowData = new Object[5];
 		for (int i=0; i < customersArchive.getListOfCustomers().size(); i++){
@@ -845,7 +847,7 @@ public class Autobus extends JFrame {
 		}
 	}
 
-	public void listCustomers(){
+	public void listPassengers(){
 		passengersTableModelForNewReservation = (DefaultTableModel) tablePassengersForNewReservation.getModel();
 		Object[] rowData = new Object[4];
 		for (int i=0; i < passengersArchive.getListOfPassengers().size(); i++){
@@ -853,7 +855,7 @@ public class Autobus extends JFrame {
 			rowData[1] = passengersArchive.getListOfPassengers().get(i).getAddress();
 			rowData[2] = passengersArchive.getListOfPassengers().get(i).getBirthday();
 			rowData[3] = passengersArchive.getListOfPassengers().get(i).getEmail();
-			customersTableModelForNewReservation.addRow(rowData);
+			passengersTableModelForNewReservation.addRow(rowData);
 		}
 	}
 
