@@ -222,17 +222,17 @@ public class Autobus extends JFrame {
 			listTours();
 		}
 
-		/*
-		 * customersArchive = new CustomersArchive(); if
-		 * (customersArchive.isFileFound()){ customersArchive.load();
-		 * listCustomers(); } else { customersArchive.createFile();
-		 * listCustomers(); }
-		 * 
-		 * passengersArchive = new PassengersArchive(); if
-		 * (passengersArchive.isFileFound()){ passengersArchive.load();
-		 * listPassengers(); } else { passengersArchive.createFile();
-		 * listPassengers(); }
-		 */
+		
+		  customersArchive = new CustomersArchive(); if
+		  (customersArchive.isFileFound()){ customersArchive.load();
+		  listCustomers(); } else { customersArchive.createFile();
+		  listCustomers(); }
+		 
+		  passengersArchive = new PassengersArchive(); if
+		  (passengersArchive.isFileFound()){ passengersArchive.load();
+		 listPassengers(); } else { passengersArchive.createFile();
+		  listPassengers(); }
+		 
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -894,7 +894,7 @@ public class Autobus extends JFrame {
 		}
 	}
 
-	public void listPassengers() {
+	public void listCustomers() {
 		customersTableModelForNewReservation = (DefaultTableModel) tableCustomersForNewReservation.getModel();
 		Object[] rowData = new Object[5];
 		for (int i = 0; i < customersArchive.getListOfCustomers().size(); i++) {
@@ -907,7 +907,7 @@ public class Autobus extends JFrame {
 		}
 	}
 
-	public void listCustomers() {
+	public void listPassengers() {
 		passengersTableModelForNewReservation = (DefaultTableModel) tablePassengersForNewReservation.getModel();
 		Object[] rowData = new Object[4];
 		for (int i = 0; i < passengersArchive.getListOfPassengers().size(); i++) {
