@@ -9,6 +9,14 @@ public abstract class Person implements Serializable{
 	String address;
 	Date birthday;
 	
+	
+	//TESTING CONSTRUCTORS
+	public Person(){}
+	public Person(String name){
+	   this.name = name;
+	}
+	
+	//
 	public Person(String name,String email, String address, Date birthday) {
 		this.name = name;
 		this.email = email;

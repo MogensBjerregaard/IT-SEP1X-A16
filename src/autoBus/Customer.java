@@ -7,8 +7,12 @@ public class Customer extends Person implements Serializable {
 
     private int numberOfReservations;
     private String phoneNumber;
-
-    public Customer(String name,String phoneNumber, String email, String address, Date birthday) {
+    
+    public Customer(String name){
+       super(name);
+    }
+    
+    public Customer(String name, String phoneNumber, String email, String address, Date birthday) {
         super(name, email, address, birthday);
         this.numberOfReservations = 0;
         this.phoneNumber = phoneNumber;

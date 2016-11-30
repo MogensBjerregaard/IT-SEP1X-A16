@@ -4,19 +4,39 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class Reservation implements Serializable {
-    private String RESERVATION_ID; //CAN WE SOMEHOW MAKE THIS FIELD FINAL?
+    /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
 
+   private String RESERVATION_ID; //CAN WE SOMEHOW MAKE THIS FIELD FINAL?
+
+   private Tour tour;
     private double discount;
 
     private Customer customer;
 
     private ArrayList<Passenger> listOfPassengers;
+    
+    public Reservation() {
+       
+    }
 
-    public Reservation(String RESERVATION_ID, double discount, Customer customer, ArrayList<Passenger> listOfPassengers) {
+    
+    public Reservation(String RESERVATION_ID, double discount, Customer customer, ArrayList<Passenger> listOfPassengers, Tour tour) {
         this.RESERVATION_ID = RESERVATION_ID;
         this.discount = discount;
         this.customer = customer;
         this.listOfPassengers = listOfPassengers;
+        this.tour = tour;
+    }
+    
+    public Tour getTour(){
+       return this.tour;
+    }
+    
+    public void setTour(Tour newTour){
+       this.tour = newTour;
     }
 
     public String getRESERVATION_ID() {

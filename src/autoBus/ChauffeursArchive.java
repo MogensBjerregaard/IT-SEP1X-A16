@@ -44,7 +44,7 @@ public class ChauffeursArchive implements Serializable{
 	}
 	
 	public void createFile() throws Exception{
-		chauffeursArchive.add(new Chauffeur("", "", "", 0, 0, 0, "", "", true, true));
+		chauffeursArchive.add(new Chauffeur());
 		saveChauffeursArchive();
 		chauffeursArchive.remove(0);
 		saveChauffeursArchive();

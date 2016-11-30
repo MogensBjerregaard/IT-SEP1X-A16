@@ -3,30 +3,26 @@ package autoBus;
 import java.io.Serializable;
 
 
-public class Chauffeur implements Serializable{
+public class Chauffeur extends Person implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String name;
-	private String email;
-	private String address;
-	private Date birthday;
+
 	private String phonenumber;
 	private String employeeNumber;
 	private boolean externalEmployee;
 	private boolean available;
 	private boolean onlyOneDayTrips;
 
-	public Chauffeur(){}
+	public Chauffeur() {
+	   
+	}
 	
 	public Chauffeur(String name, String email, String address, int month, int day, int year, String phonenumber, String employeeNumber,
-			boolean externalEmployee, boolean onlyOneDayTrips) {
-		this.name = name;
-		this.email = email;
-		this.address = address;
-		this.birthday = new Date(month, day, year);
+			boolean externalEmployee, boolean onlyOneDayTrips ) {
+	   super(name, email, address, new Date(month,day,year));
 		this.phonenumber = phonenumber;
 		this.employeeNumber = employeeNumber;
 		this.externalEmployee = externalEmployee;

@@ -14,6 +14,10 @@ public class Tour implements Serializable{
 	private	Bus bus;
 	private DateInterval dateInterval;
 
+	/*TESTING CONSTRUCTOR*/public Tour(Bus bus){
+	   this.bus = bus;
+	}
+	
 	public Tour(String destination, ArrayList<String> pickUpPlaces, double pricePerPassenger, Services services, Chauffeur chauffeur, Bus bus, DateInterval dateInterval) {
 		this.destination = destination;
 		this.pickUpPlaces = pickUpPlaces;

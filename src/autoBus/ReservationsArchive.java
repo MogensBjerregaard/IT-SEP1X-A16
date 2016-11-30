@@ -11,6 +11,14 @@ public class ReservationsArchive implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private ArrayList<Reservation> listOfReservations;
+    
+    public ReservationsArchive(){
+       this.listOfReservations = new ArrayList<>();
+    }
+    
+    public ArrayList<Reservation> getListOfReservations(){
+       return this.listOfReservations;
+    }
 
     public Reservation get(String RESERVATION_ID){
         for (int i = 0; i < listOfReservations.size(); i++) {
@@ -58,6 +66,18 @@ public class ReservationsArchive implements Serializable {
         } finally {
             objectInputStream.close();
         }
+    }
+    
+    public boolean isFileFound(){
+       Path path = Paths.get("C:\\AutoBus\\ReservationsArchive.dat");
+       return (Files.exists(path));
+    }
+    
+    public void createFile() throws Exception{
+       listOfReservations.add(new TourReservation());
+       save();
+       listOfReservations.remove(0);
+       save();
     }
 
     public String toString(){

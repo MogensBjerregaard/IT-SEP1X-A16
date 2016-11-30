@@ -122,6 +122,7 @@ public class Autobus extends JFrame {
 	private JLabel lblSelectTourButton;
 
 	private JTable tourReservationTable;
+	private DefaultTableModel tourReservationTableModel;
 	private JTextField tourReservationTextFieldSearch;
 	private JTable busReservationTable;
 	private JTextField busReservationTextFieldSearch;
@@ -223,15 +224,38 @@ public class Autobus extends JFrame {
 		}
 
 		
-		  customersArchive = new CustomersArchive(); if
-		  (customersArchive.isFileFound()){ customersArchive.load();
-		  listCustomers(); } else { customersArchive.createFile();
-		  listCustomers(); }
+		  customersArchive = new CustomersArchive();
+		  if(customersArchive.isFileFound()){ 
+		     customersArchive.load();
+		     listCustomers(); 
+	     } 
+		  else { 
+		     customersArchive.createFile();
+		     listCustomers(); 
+		  }
 		 
-		  passengersArchive = new PassengersArchive(); if
-		  (passengersArchive.isFileFound()){ passengersArchive.load();
-		 listPassengers(); } else { passengersArchive.createFile();
-		  listPassengers(); }
+		  passengersArchive = new PassengersArchive(); 
+		  if(passengersArchive.isFileFound()){ 
+		     passengersArchive.load();
+		     listPassengers(); 
+	     } 
+		  else { 
+		     passengersArchive.createFile();
+		     listPassengers(); 
+	     }
+		  
+		  reservationsArchive = new ReservationsArchive();
+        if(reservationsArchive.isFileFound()){ 
+           reservationsArchive.load();
+           /* TESTING FEATURE */ this.reservationsArchive.add(new TourReservation("Jhonny", 0, new Customer("Mogens"), new ArrayList<Passenger>(), new Tour(new Bus())));
+           listReservations(); 
+        } 
+        else { 
+           reservationsArchive.createFile();
+           listReservations(); 
+        }
+       
+       
 		 
 	}
 
@@ -892,6 +916,7 @@ public class Autobus extends JFrame {
 			toursTableModelForNewReservation.addRow(rowData);
 
 		}
+	    
 	}
 
 	public void listCustomers() {
@@ -918,6 +943,30 @@ public class Autobus extends JFrame {
 			passengersTableModelForNewReservation.addRow(rowData);
 		}
 	}
+	
+	public void listReservations(){
+      this.tourReservationTableModel = (DefaultTableModel) tourReservationTable.getModel();      
+      Object[] rowData = new Object[4];
+      for (int i=0; i < reservationsArchive.getListOfReservations().size(); i++){
+         rowData[0] = reservationsArchive.getListOfReservations().get(i).getCustomer().getName();
+         rowData[1] = reservationsArchive.getListOfReservations().get(i).getTour().getDestination();
+         rowData[2] = reservationsArchive.getListOfReservations().get(i).getTour().getBus().getMaxNumberOfSeats() - reservationsArchive.getListOfReservations().get(i).getTour().getBus().getSeatsAvailable();
+         rowData[3] = "Nick will make";
+         tourReservationTableModel.addRow(rowData);
+      }
+   }
+	
+	public void updateListReservations(Reservation newReservation){
+	   this.tourReservationTableModel = (DefaultTableModel) tourReservationTable.getModel();      
+      Object[] rowData = new Object[4];
+         rowData[0] = newReservation.getCustomer().getName();
+         rowData[1] = newReservation.getTour().getDestination();
+         rowData[2] = newReservation.getTour().getBus().getMaxNumberOfSeats() - newReservation.getTour().getBus().getSeatsAvailable();
+         rowData[3] = "Nick will make";
+         tourReservationTableModel.addRow(rowData);
+     }
+	
+	
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// This method contains all code for creating and initializing components
@@ -1241,12 +1290,14 @@ public class Autobus extends JFrame {
 		);
 
 		tourReservationTable = new JTable();
+		tourReservationTable.setShowVerticalLines(false);
 		tourReservationTable.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-						{ null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-						{ null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-						{ null, null, null, null }, },
-				new String[] { "Customer", "Tour Destination", "Number of Passengers", "Date of creation" }));
+		   new Object[][] {
+		   },
+		   new String[] {
+		      "Customer", "Tour Destination", "Number of Passengers", "Date of creation"
+		   }
+		));
 		tourReservationTable.getColumnModel().getColumn(1).setPreferredWidth(90);
 		tourReservationTable.getColumnModel().getColumn(2).setPreferredWidth(120);
 		tourReservationTable.getColumnModel().getColumn(3).setPreferredWidth(91);
