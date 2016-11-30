@@ -826,7 +826,7 @@ public class Autobus extends JFrame {
 		Object[] rowData = new Object[5];
 		for (int i=0; i < toursArchive.getListOfTours().size(); i++){
 		rowData[0] = toursArchive.getListOfTours().get(i).getDestination();
-		rowData[1] = "debug required";/*toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();*/
+		rowData[1] = toursArchive.getListOfTours().get(i).getDateInterval().getStartDate().displayDate();
 		rowData[2] = toursArchive.getListOfTours().get(i).getBus().getSeatsAvailable();
 		rowData[3] = toursArchive.getListOfTours().get(i).getBus().getVehicleID();
 		rowData[4] = toursArchive.getListOfTours().get(i).getChauffeur().getName();
