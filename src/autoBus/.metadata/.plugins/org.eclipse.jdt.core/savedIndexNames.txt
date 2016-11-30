@@ -1,0 +1,1 @@
+INDEX VERSION 1.129+C:\Users\Adam Kounis\Desktop\IT-SEP1X-A16\src\autoBus\.metadata\.plugins\org.eclipse.jdt.core

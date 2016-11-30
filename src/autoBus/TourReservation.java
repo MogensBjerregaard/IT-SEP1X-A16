@@ -12,5 +12,4 @@ public class TourReservation extends Reservation implements Serializable {
         super(RESERVATION_ID, discount, customer, listOfPassengers);
         this.tour = tour;
     }
-
 }
